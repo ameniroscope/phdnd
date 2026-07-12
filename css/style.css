@@ -110,21 +110,6 @@ nav.site-nav a[aria-current="page"] {
 
 .portrait:hover { transform: translateY(-6px); }
 
-.portrait .frame {
-  display: block;
-  border: 3px solid var(--frame);
-  outline: 1px solid var(--frame);
-  outline-offset: 5px;
-  border-radius: 150px 150px 8px 8px; /* gothic-arch top */
-  overflow: hidden;
-  box-shadow: 0 6px 18px rgba(28, 20, 16, 0.35);
-  transition: box-shadow 0.25s ease;
-}
-
-.portrait:hover .frame {
-  box-shadow: 0 12px 28px rgba(28, 20, 16, 0.5);
-}
-
 .portrait img {
   display: block;
   width: 100%;
