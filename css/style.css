@@ -1,0 +1,274 @@
+/* ===== PhDnD — parchment & ink theme ===== */
+
+:root {
+  --parchment: #efe4cb;
+  --parchment-dark: #e3d4b3;
+  --ink: #1c1410;
+  --ink-soft: #3a2e24;
+  --accent: #6e4a1f;
+  --frame: #2a2018;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background-color: var(--parchment);
+  /* subtle mottled parchment texture */
+  background-image:
+    radial-gradient(ellipse at 20% 10%, rgba(110, 74, 31, 0.08), transparent 50%),
+    radial-gradient(ellipse at 80% 90%, rgba(110, 74, 31, 0.10), transparent 50%),
+    radial-gradient(ellipse at 60% 40%, rgba(255, 250, 235, 0.35), transparent 60%);
+  color: var(--ink);
+  font-family: 'IM Fell English', Georgia, 'Times New Roman', serif;
+  font-size: 1.1rem;
+  line-height: 1.65;
+  min-height: 100vh;
+}
+
+h1, h2, h3 {
+  font-family: 'IM Fell English SC', 'IM Fell English', Georgia, serif;
+  font-weight: normal;
+  letter-spacing: 0.04em;
+}
+
+a { color: var(--ink); }
+
+/* ===== Site header / nav ===== */
+
+.site-header {
+  text-align: center;
+  padding: 2rem 1rem 1rem;
+}
+
+.site-header .site-title {
+  font-size: clamp(2.2rem, 6vw, 3.5rem);
+  text-decoration: none;
+}
+
+.site-header .site-title a { text-decoration: none; }
+
+.subtitle {
+  font-style: italic;
+  color: var(--ink-soft);
+  margin-top: 0.25rem;
+}
+
+.ornament {
+  color: var(--accent);
+  font-size: 1.3rem;
+  letter-spacing: 0.6em;
+  margin: 0.6rem 0;
+  user-select: none;
+}
+
+nav.site-nav {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem 2rem;
+  padding: 0.6rem 1rem;
+  border-top: 1px solid var(--ink-soft);
+  border-bottom: 1px solid var(--ink-soft);
+  max-width: 760px;
+  margin: 0.5rem auto 0;
+}
+
+nav.site-nav a {
+  font-family: 'IM Fell English SC', Georgia, serif;
+  font-size: 1.15rem;
+  text-decoration: none;
+  padding: 0.1rem 0.4rem;
+}
+
+nav.site-nav a:hover,
+nav.site-nav a[aria-current="page"] {
+  border-bottom: 2px solid var(--accent);
+}
+
+/* ===== Index hero layout ===== */
+
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1.5rem, 5vw, 4.5rem);
+  flex-wrap: wrap;
+  padding: 3rem 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* --- character portrait buttons --- */
+
+.portrait {
+  display: block;
+  text-decoration: none;
+  text-align: center;
+  width: min(280px, 70vw);
+  transition: transform 0.25s ease;
+}
+
+.portrait:hover { transform: translateY(-6px); }
+
+.portrait .frame {
+  display: block;
+  border: 3px solid var(--frame);
+  outline: 1px solid var(--frame);
+  outline-offset: 5px;
+  border-radius: 150px 150px 8px 8px; /* gothic-arch top */
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(28, 20, 16, 0.35);
+  transition: box-shadow 0.25s ease;
+}
+
+.portrait:hover .frame {
+  box-shadow: 0 12px 28px rgba(28, 20, 16, 0.5);
+}
+
+.portrait img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.portrait .name {
+  display: inline-block;
+  margin-top: 0.9rem;
+  font-family: 'IM Fell English SC', Georgia, serif;
+  font-size: 1.6rem;
+  letter-spacing: 0.08em;
+}
+
+.portrait:hover .name { border-bottom: 2px solid var(--accent); }
+
+/* --- central round session button --- */
+
+.session-seal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  text-decoration: none;
+  width: min(260px, 65vw);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 3px double var(--ink);
+  outline: 1px solid var(--ink);
+  outline-offset: 6px;
+  background:
+    radial-gradient(circle at 50% 35%, rgba(255, 250, 235, 0.55), transparent 65%),
+    var(--parchment-dark);
+  box-shadow: 0 6px 18px rgba(28, 20, 16, 0.35), inset 0 0 30px rgba(110, 74, 31, 0.25);
+  padding: 1.5rem;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.session-seal:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 26px rgba(28, 20, 16, 0.5), inset 0 0 30px rgba(110, 74, 31, 0.35);
+}
+
+.session-seal .glyph {
+  font-size: 2.6rem;
+  line-height: 1;
+  color: var(--accent);
+}
+
+.session-seal .label {
+  font-family: 'IM Fell English SC', Georgia, serif;
+  font-size: 1.5rem;
+  line-height: 1.2;
+  margin-top: 0.5rem;
+}
+
+.session-seal .hint {
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+  margin-top: 0.4rem;
+}
+
+/* --- chronicles link under the hero --- */
+
+.hero-footer {
+  text-align: center;
+  padding: 0 1rem 3rem;
+}
+
+.hero-footer a {
+  font-family: 'IM Fell English SC', Georgia, serif;
+  font-size: 1.3rem;
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: 2px;
+}
+
+.hero-footer a:hover { border-bottom-width: 3px; }
+
+/* ===== Content pages ===== */
+
+main.page {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+}
+
+main.page h1 {
+  text-align: center;
+  font-size: clamp(1.9rem, 5vw, 2.6rem);
+}
+
+main.page h2 {
+  font-size: 1.6rem;
+  margin: 2.2rem 0 0.8rem;
+  border-bottom: 1px solid var(--ink-soft);
+  padding-bottom: 0.25rem;
+}
+
+main.page p { margin: 0.8rem 0; }
+
+main.page ul { margin: 0.8rem 0 0.8rem 1.5rem; }
+
+.entry-date {
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+/* --- character sheets on the players page --- */
+
+.character {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin: 3rem 0;
+}
+
+.character img {
+  width: min(240px, 100%);
+  border: 3px solid var(--frame);
+  outline: 1px solid var(--frame);
+  outline-offset: 4px;
+  border-radius: 120px 120px 6px 6px;
+}
+
+.character .sheet { flex: 1; min-width: 260px; }
+
+.character .sheet h2 {
+  margin-top: 0;
+  border-bottom: 1px solid var(--ink-soft);
+}
+
+.stat-line {
+  font-family: 'IM Fell English SC', Georgia, serif;
+  color: var(--ink-soft);
+  margin-bottom: 0.6rem;
+}
+
+/* ===== Small screens: stack hero vertically, seal first ===== */
+
+@media (max-width: 720px) {
+  .hero { flex-direction: column; }
+  .session-seal { order: -1; }
+}
