@@ -18,29 +18,116 @@
       <a href="index.html">Home</a>
       <a href="session.html">Current Session</a>
       <a href="chronicles.html" aria-current="page">Chronicles</a>
-      <a href="players.html">The Party</a>
+      <a href="pip.html">Pip</a>
+      <a href="luna.html">Luna</a>
     </nav>
   </header>
 
   <main class="page">
-    <h1>The Chronicles</h1>
-    <p style="text-align: center;"><em>An annotated bibliography of adventures past.</em></p>
 
-    <h2>Prologue</h2>
-    <p class="entry-date">Before the beginning</p>
-    <p>
-      No session has yet been archived. When a chapter of the campaign closes,
-      its chronicle will be inscribed here — one entry per session, newest first.
-    </p>
+    <!-- Table of contents -->
+    <section id="toc">
+      <h1>The Chronicles</h1>
+      <p style="text-align: center;"><em>An annotated bibliography of adventures past.</em></p>
+      <ol class="toc-list" id="toc-list"></ol>
+    </section>
 
-    <!-- Template for a new chronicle entry — copy, paste above this comment, and fill in:
+    <!-- Chapter reader -->
+    <article id="reader" hidden>
+      <h1 id="chapter-title"></h1>
+      <div id="chapter-body"></div>
+      <nav class="chapter-nav">
+        <a href="#" id="prev-link"><span aria-hidden="true">❮</span> Previous</a>
+        <a href="#contents" id="contents-link">Contents</a>
+        <a href="#" id="next-link">Next <span aria-hidden="true">❯</span></a>
+      </nav>
+    </article>
 
-    <h2>Session I — A Fitting Title</h2>
-    <p class="entry-date">12 July 2026</p>
-    <p>What happened, who nearly died, and which plan went sideways.</p>
-
-    -->
   </main>
+
+  <script>
+    // To add a chapter: drop chronicles/chapterN.txt in the folder (first
+    // line = title, blank-line-separated paragraphs after) and bump this.
+    const NUM_CHAPTERS = 7;
+
+    const tocSection = document.getElementById('toc');
+    const tocList = document.getElementById('toc-list');
+    const reader = document.getElementById('reader');
+    const chapters = []; // { title, paragraphs }
+
+    function roman(n) {
+      const table = [[10, 'X'], [9, 'IX'], [5, 'V'], [4, 'IV'], [1, 'I']];
+      let out = '';
+      for (const [v, s] of table) while (n >= v) { out += s; n -= v; }
+      return out;
+    }
+
+    async function fetchChapter(n) {
+      const res = await fetch(`chronicles/chapter${n}.txt`);
+      if (!res.ok) throw new Error(`chapter ${n} not found`);
+      const lines = (await res.text()).split(/\r?\n/).filter(l => l.trim() !== '');
+      return { title: lines[0], paragraphs: lines.slice(1) };
+    }
+
+    function showContents() {
+      reader.hidden = true;
+      tocSection.hidden = false;
+    }
+
+    function showChapter(n) {
+      const ch = chapters[n - 1];
+      if (!ch) { showContents(); return; }
+
+      document.getElementById('chapter-title').textContent = ch.title;
+      const body = document.getElementById('chapter-body');
+      body.replaceChildren(...ch.paragraphs.map(text => {
+        const p = document.createElement('p');
+        p.textContent = text;
+        return p;
+      }));
+
+      const prev = document.getElementById('prev-link');
+      const next = document.getElementById('next-link');
+      prev.style.visibility = n > 1 ? 'visible' : 'hidden';
+      next.style.visibility = n < chapters.length ? 'visible' : 'hidden';
+      prev.href = `#chapter-${n - 1}`;
+      next.href = `#chapter-${n + 1}`;
+
+      tocSection.hidden = true;
+      reader.hidden = false;
+      window.scrollTo(0, 0);
+    }
+
+    function route() {
+      const m = location.hash.match(/^#chapter-(\d+)$/);
+      if (m) showChapter(Number(m[1]));
+      else showContents();
+    }
+
+    async function init() {
+      const results = await Promise.allSettled(
+        Array.from({ length: NUM_CHAPTERS }, (_, i) => fetchChapter(i + 1))
+      );
+      results.forEach((r, i) => {
+        if (r.status !== 'fulfilled') return;
+        chapters[i] = r.value;
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = `#chapter-${i + 1}`;
+        a.textContent = r.value.title;
+        li.appendChild(a);
+        tocList.appendChild(li);
+      });
+      if (chapters.length === 0) {
+        tocList.insertAdjacentHTML('beforebegin',
+          '<p style="text-align:center;"><em>No chronicles have been inscribed yet.</em></p>');
+      }
+      route();
+    }
+
+    window.addEventListener('hashchange', route);
+    init();
+  </script>
 
 </body>
 </html>

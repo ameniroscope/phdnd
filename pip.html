@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Party — PhDnD</title>
+  <title>Pip — PhDnD</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&display=swap" rel="stylesheet">
@@ -18,49 +18,55 @@
       <a href="index.html">Home</a>
       <a href="session.html">Current Session</a>
       <a href="chronicles.html">Chronicles</a>
-      <a href="players.html" aria-current="page">The Party</a>
+      <a href="pip.html" aria-current="page">Pip</a>
+      <a href="luna.html">Luna</a>
     </nav>
   </header>
 
-  <main class="page">
-    <h1>The Party</h1>
+  <main class="page character-page" data-character="pip">
+    <h1>Pip</h1>
 
-    <section class="character" id="pip">
+    <div class="char-hero">
       <img src="assets/pip.jpg" alt="Pip, the raccoon wizard, reading from a smoking grimoire">
-      <div class="sheet">
-        <h2>Pip</h2>
+      <div class="char-desc">
         <p class="stat-line">Race · Class · Level</p>
         <p>
           A small scholar with big ambitions and even bigger sleeves. Pip's
           grimoire smokes when opened, which is either a feature of the magic
           or a warning from it — the literature is divided.
         </p>
-        <h3>Notable deeds</h3>
-        <ul>
-          <li><em>To be recorded as the campaign unfolds.</em></li>
-        </ul>
-      </div>
-    </section>
-
-    <p class="ornament" style="text-align: center;">✦ ❦ ✦</p>
-
-    <section class="character" id="luna">
-      <img src="assets/luna.jpg" alt="Luna, the hooded witch, stirring her cauldron beneath the stars">
-      <div class="sheet">
-        <h2>Luna</h2>
-        <p class="stat-line">Race · Class · Level</p>
         <p>
-          Keeper of the cauldron and reader of star-bound recipes. Luna's brews
-          have never failed — though the definition of "success" is negotiated
-          on a case-by-case basis with whoever drinks them.
+          Since the strange field beyond Mistbarrow, Pip's bond with root and
+          spore has deepened: the land is no longer only something beneath his
+          feet, but a voice waiting to be asked the right question.
         </p>
-        <h3>Notable deeds</h3>
-        <ul>
-          <li><em>To be recorded as the campaign unfolds.</em></li>
-        </ul>
       </div>
-    </section>
+    </div>
+
+    <div class="char-boxes">
+
+      <section class="box">
+        <h2>Inventory</h2>
+        <ul class="item-list" data-box="inventory"></ul>
+        <form class="add-form" data-box="inventory">
+          <input type="text" placeholder="A new possession…" aria-label="New inventory item">
+          <button type="submit">Add</button>
+        </form>
+      </section>
+
+      <section class="box">
+        <h2>Spells</h2>
+        <ul class="item-list" data-box="spells"></ul>
+        <form class="add-form" data-box="spells">
+          <input type="text" placeholder="A new incantation…" aria-label="New spell">
+          <button type="submit">Add</button>
+        </form>
+      </section>
+
+    </div>
   </main>
+
+  <script src="js/character.js"></script>
 
 </body>
 </html>

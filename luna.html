@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Luna — PhDnD</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <h1 class="site-title"><a href="index.html">PhDnD</a></h1>
+    <p class="ornament">☽ ✦ ❦ ✦ ☾</p>
+    <nav class="site-nav">
+      <a href="index.html">Home</a>
+      <a href="session.html">Current Session</a>
+      <a href="chronicles.html">Chronicles</a>
+      <a href="pip.html">Pip</a>
+      <a href="luna.html" aria-current="page">Luna</a>
+    </nav>
+  </header>
+
+  <main class="page character-page" data-character="luna">
+    <h1>Luna</h1>
+
+    <div class="char-hero">
+      <img src="assets/luna.jpg" alt="Luna, the hooded witch, stirring her cauldron beneath the stars">
+      <div class="char-desc">
+        <p class="stat-line">Race · Class · Level</p>
+        <p>
+          Keeper of the cauldron and reader of star-bound recipes. Luna's brews
+          have never failed — though the definition of "success" is negotiated
+          on a case-by-case basis with whoever drinks them.
+        </p>
+        <p>
+          From the Copper Kettle Inn to the living city of Thellerkin, Luna has
+          met every impossible thing the road offered with the same steady
+          answer: words first, magic second, and the cauldron for whatever is left.
+        </p>
+      </div>
+    </div>
+
+    <div class="char-boxes">
+
+      <section class="box">
+        <h2>Inventory</h2>
+        <ul class="item-list" data-box="inventory"></ul>
+        <form class="add-form" data-box="inventory">
+          <input type="text" placeholder="A new possession…" aria-label="New inventory item">
+          <button type="submit">Add</button>
+        </form>
+      </section>
+
+      <section class="box">
+        <h2>Spells</h2>
+        <ul class="item-list" data-box="spells"></ul>
+        <form class="add-form" data-box="spells">
+          <input type="text" placeholder="A new incantation…" aria-label="New spell">
+          <button type="submit">Add</button>
+        </form>
+      </section>
+
+    </div>
+  </main>
+
+  <script src="js/character.js"></script>
+
+</body>
+</html>

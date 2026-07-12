@@ -235,35 +235,166 @@ main.page ul { margin: 0.8rem 0 0.8rem 1.5rem; }
   color: var(--ink-soft);
 }
 
-/* --- character sheets on the players page --- */
+/* --- chronicles: table of contents & reader --- */
 
-.character {
-  display: flex;
-  gap: 2rem;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  margin: 3rem 0;
+.toc-list {
+  list-style: none;
+  margin: 2rem 0;
 }
 
-.character img {
-  width: min(240px, 100%);
+.toc-list li {
+  border-bottom: 1px dotted var(--ink-soft);
+  padding: 0.55rem 0.2rem;
+}
+
+.toc-list a {
+  font-family: 'IM Fell English SC', Georgia, serif;
+  font-size: 1.25rem;
+  text-decoration: none;
+}
+
+.toc-list a:hover { border-bottom: 2px solid var(--accent); }
+
+#reader h1 { margin-bottom: 1.5rem; }
+
+.chapter-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 3rem;
+  border-top: 1px solid var(--ink-soft);
+  padding-top: 1rem;
+}
+
+.chapter-nav a {
+  font-family: 'IM Fell English SC', Georgia, serif;
+  font-size: 1.15rem;
+  text-decoration: none;
+}
+
+.chapter-nav a:hover { border-bottom: 2px solid var(--accent); }
+
+/* --- character pages --- */
+
+.character-page { max-width: 900px; }
+
+.char-hero {
+  display: flex;
+  gap: 2.5rem;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin: 2.5rem 0;
+}
+
+.char-hero img {
+  width: min(260px, 100%);
   border: 3px solid var(--frame);
   outline: 1px solid var(--frame);
   outline-offset: 4px;
-  border-radius: 120px 120px 6px 6px;
+  border-radius: 130px 130px 6px 6px;
+  margin: 0 auto;
 }
 
-.character .sheet { flex: 1; min-width: 260px; }
-
-.character .sheet h2 {
-  margin-top: 0;
-  border-bottom: 1px solid var(--ink-soft);
-}
+.char-desc { flex: 1; min-width: 260px; }
 
 .stat-line {
   font-family: 'IM Fell English SC', Georgia, serif;
   color: var(--ink-soft);
   margin-bottom: 0.6rem;
+}
+
+.char-boxes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin: 2.5rem 0;
+}
+
+.box {
+  border: 3px double var(--ink);
+  border-radius: 6px;
+  background: rgba(255, 250, 235, 0.35);
+  box-shadow: 0 4px 12px rgba(28, 20, 16, 0.15);
+  padding: 1.2rem 1.4rem 1.4rem;
+}
+
+.box h2 {
+  margin: 0 0 0.8rem;
+  text-align: center;
+  border-bottom: 1px solid var(--ink-soft);
+  padding-bottom: 0.4rem;
+  font-size: 1.5rem;
+}
+
+.item-list {
+  list-style: none;
+  margin: 0 0 1rem;
+  min-height: 2.5rem;
+}
+
+.item-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.6rem;
+  border-bottom: 1px dotted var(--ink-soft);
+  padding: 0.35rem 0.1rem;
+}
+
+.item-list li.empty {
+  border-bottom: none;
+  font-style: italic;
+  color: var(--ink-soft);
+  justify-content: center;
+}
+
+.remove-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  padding: 0 0.2rem;
+}
+
+.remove-btn:hover { color: var(--ink); }
+
+.add-form {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.add-form input {
+  flex: 1;
+  min-width: 0;
+  font-family: inherit;
+  font-size: 1rem;
+  color: var(--ink);
+  background: rgba(255, 250, 235, 0.6);
+  border: 1px solid var(--ink-soft);
+  border-radius: 3px;
+  padding: 0.35rem 0.6rem;
+}
+
+.add-form input:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.add-form button {
+  font-family: 'IM Fell English SC', Georgia, serif;
+  font-size: 1.05rem;
+  color: var(--ink);
+  background: var(--parchment-dark);
+  border: 1px solid var(--ink);
+  border-radius: 3px;
+  padding: 0.3rem 1rem;
+  cursor: pointer;
+}
+
+.add-form button:hover {
+  background: var(--ink);
+  color: var(--parchment);
 }
 
 /* ===== Small screens: stack hero vertically, seal first ===== */
