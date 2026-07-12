@@ -119,8 +119,11 @@
         tocList.appendChild(li);
       });
       if (chapters.length === 0) {
+        const msg = location.protocol === 'file:'
+          ? 'The chronicles cannot be read when this page is opened as a local file — visit the published site instead.'
+          : 'No chronicles have been inscribed yet.';
         tocList.insertAdjacentHTML('beforebegin',
-          '<p style="text-align:center;"><em>No chronicles have been inscribed yet.</em></p>');
+          `<p style="text-align:center;"><em>${msg}</em></p>`);
       }
       route();
     }

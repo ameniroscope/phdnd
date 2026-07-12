@@ -69,7 +69,7 @@ nav.site-nav {
   padding: 0.6rem 1rem;
   border-top: 1px solid var(--ink-soft);
   border-bottom: 1px solid var(--ink-soft);
-  max-width: 760px;
+  max-width: 1100px;
   margin: 0.5rem auto 0;
 }
 
@@ -194,7 +194,7 @@ nav.site-nav a[aria-current="page"] {
 /* ===== Content pages ===== */
 
 main.page {
-  max-width: 760px;
+  max-width: 1100px;
   margin: 0 auto;
   padding: 2.5rem 1.5rem 4rem;
 }
@@ -260,8 +260,6 @@ main.page ul { margin: 0.8rem 0 0.8rem 1.5rem; }
 .chapter-nav a:hover { border-bottom: 2px solid var(--accent); }
 
 /* --- character pages --- */
-
-.character-page { max-width: 900px; }
 
 .char-hero {
   display: flex;
