@@ -1,4 +1,4 @@
-/* ===== PhDnD — parchment & ink theme ===== */
+/* ===== PhDnD — parchment & ink, phone-app layout on every screen ===== */
 
 :root {
   --parchment: #efe4cb;
@@ -14,17 +14,39 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
+/* The portrait artwork (941x1672) is the app's canvas. --art-w/--art-h mirror
+   how it is painted: cover on phone-shaped screens; on wider screens it is
+   fitted by height and centered, so the app becomes a phone-like column. */
 body {
-  background-color: #221a12; /* fallback while the image loads */
-  background-image: url('../assets/background.jpg');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
+  --art-w: max(100vw, calc(100vh * 0.5628));
+  --art-h: max(100vh, calc(100vw * 1.7768));
+
+  background-color: #221a12;
   color: var(--ink);
   font-family: 'IM Fell English', Georgia, 'Times New Roman', serif;
   font-size: 1.1rem;
   line-height: 1.65;
   min-height: 100vh;
+  padding-bottom: calc(4.6rem + env(safe-area-inset-bottom));
+}
+
+/* fixed backdrop — a pseudo-element because iOS Safari ignores
+   background-attachment: fixed */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: #221a12 url('../assets/background-mobile.jpg') center / cover no-repeat;
+}
+
+@media (min-aspect-ratio: 941/1672) {
+  body {
+    --art-w: calc(100vh * 0.5628);
+    --art-h: 100vh;
+  }
+
+  body::before { background-size: auto 100%; }
 }
 
 h1, h2, h3 {
@@ -35,225 +57,81 @@ h1, h2, h3 {
 
 a { color: var(--ink); }
 
-/* ===== Site header / nav ===== */
+/* ===== Header ===== */
 
 .site-header {
   text-align: center;
-  padding: 2rem 1rem 1rem;
+  padding: 0.7rem 1rem 0;
   color: var(--candlelight);
   text-shadow: 0 1px 6px rgba(0, 0, 0, 0.8);
 }
 
 .site-header a { color: var(--candlelight); }
 
-.site-header .site-title {
-  font-size: clamp(2.2rem, 6vw, 3.5rem);
-  text-decoration: none;
-}
+.site-header .site-title { font-size: clamp(1.8rem, 6vw, 2.4rem); }
 
 .site-header .site-title a { text-decoration: none; }
 
-.subtitle {
-  font-style: italic;
-  color: var(--candlelight-dim);
-  margin-top: 0.25rem;
-}
-
-.ornament {
-  color: var(--candlelight-dim);
-  font-size: 1.3rem;
-  letter-spacing: 0.6em;
-  margin: 0.6rem 0;
-  user-select: none;
-}
-
-nav.site-nav {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 0.5rem 2rem;
-  padding: 0.6rem 1rem;
-  border-top: 1px solid rgba(236, 223, 194, 0.45);
-  border-bottom: 1px solid rgba(236, 223, 194, 0.45);
-  max-width: 1100px;
-  margin: 0.5rem auto 0;
-}
-
-nav.site-nav a {
-  font-family: 'IM Fell English SC', Georgia, serif;
-  font-size: 1.15rem;
-  text-decoration: none;
-  padding: 0.1rem 0.4rem;
-  color: var(--candlelight);
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
-}
-
-nav.site-nav a:hover,
-nav.site-nav a[aria-current="page"] {
-  border-bottom: 2px solid var(--accent);
-}
-
-/* ===== Index hero layout ===== */
-
-.hero {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: clamp(1.5rem, 5vw, 4.5rem);
-  flex-wrap: wrap;
-  padding: 3rem 1.5rem;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-/* --- character portrait buttons --- */
-
-.portrait {
-  display: block;
-  text-decoration: none;
-  text-align: center;
-  width: min(280px, 70vw);
-  transition: transform 0.25s ease;
-}
-
-.portrait:hover { transform: translateY(-6px); }
-
-.portrait img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-.portrait .name {
-  display: inline-block;
-  margin-top: 0.9rem;
-  font-family: 'IM Fell English SC', Georgia, serif;
-  font-size: 1.6rem;
-  letter-spacing: 0.08em;
-  color: var(--candlelight);
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
-}
-
-.portrait:hover .name { border-bottom: 2px solid var(--accent); }
-
-/* --- central round session button --- */
-
-.session-seal {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  text-decoration: none;
-  width: min(260px, 65vw);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  border: 3px double var(--ink);
-  outline: 1px solid var(--ink);
-  outline-offset: 6px;
-  background:
-    radial-gradient(circle at 50% 35%, rgba(255, 250, 235, 0.55), transparent 65%),
-    var(--parchment-dark);
-  box-shadow: 0 6px 18px rgba(28, 20, 16, 0.35), inset 0 0 30px rgba(110, 74, 31, 0.25);
-  padding: 1.5rem;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.session-seal:hover {
-  transform: scale(1.05);
-  box-shadow: 0 10px 26px rgba(28, 20, 16, 0.5), inset 0 0 30px rgba(110, 74, 31, 0.35);
-}
-
-.session-seal .glyph {
-  font-size: 2.6rem;
-  line-height: 1;
-  color: var(--accent);
-}
-
-.session-seal .label {
-  font-family: 'IM Fell English SC', Georgia, serif;
-  font-size: 1.5rem;
-  line-height: 1.2;
-  margin-top: 0.5rem;
-}
-
-.session-seal .hint {
-  font-style: italic;
-  font-size: 0.95rem;
-  color: var(--ink-soft);
-  margin-top: 0.4rem;
-}
-
-/* --- chronicles link under the hero --- */
-
-.hero-footer {
-  text-align: center;
-  padding: 0 1rem 3rem;
-}
-
-.hero-footer a {
-  font-family: 'IM Fell English SC', Georgia, serif;
-  font-size: 1.3rem;
-  text-decoration: none;
-  border-bottom: 1px solid var(--candlelight-dim);
-  padding-bottom: 2px;
-  color: var(--candlelight);
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
-}
-
-.hero-footer a:hover { border-bottom-width: 3px; }
-
-/* ===== Content pages ===== */
+/* ===== Content: a fixed box matching the paper in the artwork,
+         scrolling internally ===== */
 
 main.page {
-  width: calc(100% - 2rem);
-  max-width: 1100px;
-  margin: 1.5rem auto 3rem;
-  padding: 2.5rem clamp(1.2rem, 4vw, 3rem) 3.5rem;
-  background: var(--parchment);
-  border: 1px solid rgba(42, 32, 24, 0.7);
-  border-radius: 6px;
-  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.55);
+  position: fixed;
+  left: 50%;
+  /* paper zone: 11.5% / 14.5%, 77% wide, 69% tall (center at 49% height) */
+  top: calc(50% - var(--art-h) * 0.01);
+  transform: translate(-50%, -50%);
+  width: calc(var(--art-w) * 0.77);
+  height: calc(var(--art-h) * 0.69);
+  padding: 0.5rem 0.6rem 1.5rem;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(58, 46, 36, 0.45) transparent;
 }
 
 main.page h1 {
   text-align: center;
-  font-size: clamp(1.9rem, 5vw, 2.6rem);
+  font-size: clamp(1.7rem, 6vw, 2.2rem);
 }
 
 main.page h2 {
-  font-size: 1.6rem;
-  margin: 2.2rem 0 0.8rem;
+  font-size: 1.4rem;
+  margin: 1.6rem 0 0.6rem;
   border-bottom: 1px solid var(--ink-soft);
   padding-bottom: 0.25rem;
 }
 
-main.page p { margin: 0.8rem 0; }
+main.page h3 {
+  font-size: 1.35rem;
+  text-align: center;
+  margin: 1.4rem 0 0.5rem;
+  border-bottom: 1px solid var(--ink-soft);
+  padding-bottom: 0.25rem;
+}
 
-main.page ul { margin: 0.8rem 0 0.8rem 1.5rem; }
+main.page p { margin: 0.6rem 0; }
+
+main.page ul { margin: 0.6rem 0 0.6rem 1.4rem; }
 
 .entry-date {
   font-style: italic;
   color: var(--ink-soft);
 }
 
-/* --- chronicles: chapter gallery & reader --- */
+/* ===== Chronicles: chapter gallery & reader ===== */
 
 .gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-  gap: 2rem 1.5rem;
-  margin: 2rem 0;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.4rem 0.9rem;
+  margin: 1.5rem 0;
 }
 
 .chapter-card {
   display: block;
   text-decoration: none;
   text-align: center;
-  transition: transform 0.2s ease;
 }
-
-.chapter-card:hover { transform: translateY(-4px); }
 
 .card-art {
   display: flex;
@@ -279,95 +157,76 @@ main.page ul { margin: 0.8rem 0 0.8rem 1.5rem; }
 
 .card-title {
   display: block;
-  margin-top: 0.7rem;
+  margin-top: 0.6rem;
   font-family: 'IM Fell English SC', Georgia, serif;
-  font-size: 1.15rem;
+  font-size: 0.95rem;
   line-height: 1.3;
   color: var(--ink);
 }
 
-.chapter-card:hover .card-title { text-decoration: underline; }
-
-@media (max-width: 820px) {
-  .gallery {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.4rem 0.9rem;
-  }
-  .card-title { font-size: 0.95rem; }
-}
-
-#reader h1 { margin-bottom: 1.5rem; }
+#reader h1 { margin-bottom: 1.2rem; }
 
 .chapter-nav {
   display: flex;
   justify-content: space-between;
   gap: 1rem;
-  margin-top: 3rem;
+  margin-top: 2rem;
   border-top: 1px solid var(--ink-soft);
-  padding-top: 1rem;
+  padding-top: 0.8rem;
 }
 
 .chapter-nav a {
   font-family: 'IM Fell English SC', Georgia, serif;
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   text-decoration: none;
 }
 
-.chapter-nav a:hover { border-bottom: 2px solid var(--accent); }
+/* ===== Character pages ===== */
 
-/* --- character pages --- */
+.page-left { margin-bottom: 1.5rem; }
 
-.char-hero {
+.char-top {
   display: flex;
-  gap: 2.5rem;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  margin: 2.5rem 0;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.8rem;
 }
 
-.char-hero img {
-  width: min(260px, 100%);
-  border: 3px solid var(--frame);
-  outline: 1px solid var(--frame);
-  outline-offset: 4px;
-  border-radius: 130px 130px 6px 6px;
-  margin: 0 auto;
+/* portrait without a frame, blended into the parchment */
+.char-top img {
+  width: 58%;
+  mix-blend-mode: multiply;
 }
-
-.char-desc { flex: 1; min-width: 260px; }
 
 .stat-line {
   font-family: 'IM Fell English SC', Georgia, serif;
   color: var(--ink-soft);
-  margin-bottom: 0.6rem;
+  text-align: center;
+  line-height: 1.5;
 }
 
-.char-boxes {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
-  margin: 2.5rem 0;
-}
+/* --- inventory & spell boxes drawn in ink --- */
 
 .box {
-  border: 3px double var(--ink);
-  border-radius: 6px;
-  background: rgba(255, 250, 235, 0.35);
-  box-shadow: 0 4px 12px rgba(28, 20, 16, 0.15);
-  padding: 1.2rem 1.4rem 1.4rem;
+  border: 2px solid rgba(58, 46, 36, 0.85);
+  /* uneven radii for a hand-drawn look */
+  border-radius: 14px 5px 16px 6px / 6px 15px 5px 14px;
+  padding: 1rem 1.2rem 1.2rem;
+  margin-bottom: 1.5rem;
 }
 
 .box h2 {
-  margin: 0 0 0.8rem;
-  text-align: center;
+  font-size: 1.4rem;
+  margin: 0 0 0.6rem;
+  padding-bottom: 0.3rem;
   border-bottom: 1px solid var(--ink-soft);
-  padding-bottom: 0.4rem;
-  font-size: 1.5rem;
+  text-align: center;
 }
 
 .item-list {
   list-style: none;
-  margin: 0 0 1rem;
+  margin: 0 0 0.8rem;
   min-height: 2.5rem;
 }
 
@@ -376,8 +235,9 @@ main.page ul { margin: 0.8rem 0 0.8rem 1.5rem; }
   justify-content: space-between;
   align-items: baseline;
   gap: 0.6rem;
-  border-bottom: 1px dotted var(--ink-soft);
-  padding: 0.35rem 0.1rem;
+  font-size: 1rem;
+  padding: 0.3rem 0.1rem;
+  border-bottom: 1px dotted rgba(58, 46, 36, 0.5);
 }
 
 .item-list li.empty {
@@ -407,27 +267,28 @@ main.page ul { margin: 0.8rem 0 0.8rem 1.5rem; }
   flex: 1;
   min-width: 0;
   font-family: inherit;
-  font-size: 1rem;
+  font-size: 1rem; /* 16px+ prevents iOS focus zoom */
   color: var(--ink);
-  background: rgba(255, 250, 235, 0.6);
-  border: 1px solid var(--ink-soft);
-  border-radius: 3px;
-  padding: 0.35rem 0.6rem;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--ink-soft);
+  border-radius: 0;
+  padding: 0.55rem 0.3rem;
 }
 
 .add-form input:focus {
-  outline: 2px solid var(--accent);
-  outline-offset: 1px;
+  outline: none;
+  border-bottom-color: var(--ink);
 }
 
 .add-form button {
   font-family: 'IM Fell English SC', Georgia, serif;
   font-size: 1.05rem;
   color: var(--ink);
-  background: var(--parchment-dark);
-  border: 1px solid var(--ink);
-  border-radius: 3px;
-  padding: 0.3rem 1rem;
+  background: transparent;
+  border: 1px solid var(--ink-soft);
+  border-radius: 8px 3px 9px 4px / 4px 8px 3px 8px;
+  padding: 0.55rem 1.2rem;
   cursor: pointer;
 }
 
@@ -436,408 +297,38 @@ main.page ul { margin: 0.8rem 0 0.8rem 1.5rem; }
   color: var(--parchment);
 }
 
-/* ===== Character pages: written inside the open book ===== */
+/* ===== Tab bar ===== */
 
-/* The book keeps the artwork's exact aspect ratio and scales to fit the
-   viewport; everything inside is positioned in % of the image and sized in
-   cqw (1% of book width) so text and art scale together. */
-
-html:has(body.book-page) { overflow: hidden; }
-
-body.book-page {
-  height: 100vh;
-  overflow: hidden;
-  position: relative;
-}
-
-/* The book div carries no image of its own — the body background is the only
-   copy. It is sized and centered exactly like `background-size: cover`
-   renders the artwork, so the % zones below always track the painted book. */
-.book {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: max(100vw, calc(100vh * 1.7768));
-  aspect-ratio: 1672 / 941;
-  container-type: inline-size;
-
-  /* ---- zone placement: tune these by hand ----
-     All values are % of the artwork (left/top measured from its top-left
-     corner). The dashed outlines further down show them live. */
-  --page-top: 17%;
-  --page-height: 65%;
-  --page-width: 28%;
-  --left-page-x: 20%;
-  --right-page-x: 53%;
-  --inkpot-x: 90.5%;    /* left edge of ink pot     */
-  --inkpot-y: 68%;      /* top edge of ink pot      */
-  --inkpot-width: 7.5%;
-  --inkpot-height: 17%;
-}
-
-/* TEMPORARY: dashed outlines showing the zones for manual placement.
-   Delete this block (or just these rules) once everything sits right. */
-.page-left,
-.page-right,
-.inkpot-link {
-  outline: 2px dashed rgba(200, 30, 30, 0.75);
-}
-
-/* --- the ink pot is the Home button --- */
-
-.inkpot-link {
-  position: absolute;
-  left: var(--inkpot-x);
-  top: var(--inkpot-y);
-  width: var(--inkpot-width);
-  height: var(--inkpot-height);
-  border-radius: 30%;
-  text-decoration: none;
-}
-
-/* the house is always visible so the button is easy to find */
-.inkpot-link::before {
-  content: '🏠';
-  position: absolute;
-  inset: 0;
+.tab-bar {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2cqw;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.9));
-}
-
-.inkpot-link::after {
-  content: 'Home';
-  position: absolute;
-  bottom: 102%;
+  position: fixed;
   left: 50%;
   transform: translateX(-50%);
-  font-family: 'IM Fell English SC', Georgia, serif;
-  font-size: 1.2cqw;
-  color: var(--candlelight);
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
-  opacity: 0;
-  transition: opacity 0.2s ease;
-  pointer-events: none;
+  bottom: 0;
+  z-index: 100;
+  width: min(100vw, var(--art-w));
+  background: rgba(22, 15, 10, 0.96);
+  border-top: 1px solid rgba(236, 223, 194, 0.35);
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
-.inkpot-link:hover { box-shadow: 0 0 2.2cqw 0.4cqw rgba(236, 223, 194, 0.30); }
-.inkpot-link:hover::after { opacity: 1; }
-
-/* --- the two pages of the spread --- */
-
-.page-left,
-.page-right {
-  position: absolute;
-  top: var(--page-top);
-  height: var(--page-height);
-  width: var(--page-width);
-  overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(58, 46, 36, 0.45) transparent;
-  color: var(--ink);
-}
-
-.page-left { left: var(--left-page-x); padding-right: 0.8cqw; }
-.page-right { left: var(--right-page-x); display: flex; flex-direction: column; gap: 3.5%; }
-
-.book h1 {
-  font-size: 2.4cqw;
-  margin-bottom: 0.3cqw;
-}
-
-.book .stat-line {
-  font-size: 1.05cqw;
-  line-height: 1.5;
-  margin-bottom: 0;
-}
-
-.book h3 {
-  font-size: 1.5cqw;
-  margin: 1.6cqw 0 0.5cqw;
-  border-bottom: 0.09cqw solid var(--ink-soft);
-  padding-bottom: 0.25cqw;
-}
-
-.book p,
-.book li {
-  font-size: 1.08cqw;
-  line-height: 1.55;
-}
-
-.book p { margin: 0.5cqw 0; }
-
-.book ul { margin: 0.5cqw 0 0.5cqw 1.6cqw; }
-
-.char-top {
-  display: flex;
-  gap: 1.4cqw;
-  align-items: flex-start;
-}
-
-.char-top img {
-  width: 38%;
-  border: 0.18cqw solid var(--frame);
-  border-radius: 45% 45% 4% 4% / 30% 30% 2% 2%;
-}
-
-/* --- inventory & spell boxes drawn in ink on the right page --- */
-
-.book .box {
+.tab-bar a {
   flex: 1;
-  min-height: 0;
   display: flex;
   flex-direction: column;
-  background: transparent;
-  box-shadow: none;
-  border: 0.16cqw solid rgba(58, 46, 36, 0.85);
-  /* uneven radii for a hand-drawn look */
-  border-radius: 1.2cqw 0.4cqw 1.4cqw 0.5cqw / 0.5cqw 1.3cqw 0.4cqw 1.2cqw;
-  padding: 0.9cqw 1.2cqw 1.1cqw;
+  align-items: center;
+  gap: 0.1rem;
+  padding: 0.5rem 0 0.55rem;
+  text-decoration: none;
+  color: var(--candlelight-dim);
+  font-family: 'IM Fell English SC', Georgia, serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
 }
 
-.book .box h2 {
-  font-size: 1.7cqw;
-  margin: 0 0 0.6cqw;
-  padding-bottom: 0.3cqw;
-  border-bottom: 0.09cqw solid var(--ink-soft);
-  text-align: center;
-}
+.tab-bar .tab-icon { font-size: 1.4rem; line-height: 1.2; }
 
-.book .item-list {
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(58, 46, 36, 0.45) transparent;
-  margin: 0 0 0.8cqw;
-}
-
-.book .item-list li {
-  font-size: 1.08cqw;
-  padding: 0.3cqw 0.1cqw;
-  border-bottom: 0.09cqw dotted rgba(58, 46, 36, 0.5);
-}
-
-.book .add-form { gap: 0.6cqw; }
-
-.book .add-form input {
-  font-size: 1.05cqw;
-  background: transparent;
-  border: none;
-  border-bottom: 0.12cqw solid var(--ink-soft);
-  border-radius: 0;
-  padding: 0.25cqw 0.3cqw;
-}
-
-.book .add-form input:focus {
-  outline: none;
-  border-bottom-color: var(--ink);
-}
-
-.book .add-form button {
-  font-size: 1.1cqw;
-  background: transparent;
-  border: 0.12cqw solid var(--ink-soft);
-  border-radius: 0.6cqw 0.25cqw 0.7cqw 0.3cqw / 0.3cqw 0.6cqw 0.25cqw 0.6cqw;
-  padding: 0.15cqw 0.9cqw;
-}
-
-.book .add-form button:hover {
-  background: var(--ink);
-  color: var(--parchment);
-}
-
-/* --- small screens: the book art is too small to write in, fall back to
-       stacked parchment panels --- */
-
-@media (max-width: 820px) {
-  html:has(body.book-page) { overflow: auto; }
-
-  body.book-page {
-    height: auto;
-    min-height: 100vh;
-    overflow: visible;
-  }
-
-  .book {
-    position: static;
-    transform: none;
-    width: auto;
-    aspect-ratio: auto;
-  }
-
-  .page-left,
-  .page-right,
-  .inkpot-link { outline: none; }
-
-  .inkpot-link {
-    position: static;
-    display: block;
-    width: auto;
-    height: auto;
-    text-align: center;
-    padding: 1.2rem 0 0.2rem;
-    font-family: 'IM Fell English SC', Georgia, serif;
-    font-size: 1.3rem;
-    color: var(--candlelight);
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
-  }
-
-  .inkpot-link::before {
-    content: '🏠 Home';
-    position: static;
-    display: inline;
-    font-size: inherit;
-    filter: none;
-  }
-  .inkpot-link::after { display: none; }
-
-  /* text sits directly on the artwork's paper — no panels */
-  .page-left,
-  .page-right {
-    position: static;
-    width: auto;
-    height: auto;
-    margin: 0 0 1.5rem;
-    padding: 0;
-    background: transparent;
-    border: none;
-    box-shadow: none;
-    overflow: visible;
-  }
-
-  /* portrait without a frame, its white paper blended into the parchment */
-  .char-top {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
-  .char-top img {
-    width: 58%;
-    border: none;
-    border-radius: 0;
-    mix-blend-mode: multiply;
-  }
-
-  .book h1 { text-align: center; }
-  .book .stat-line { text-align: center; }
-  .book h3 { text-align: center; }
-
-  .book h1 { font-size: 2rem; }
-  .book .stat-line { font-size: 1rem; }
-  .book h3 { font-size: 1.35rem; margin: 1.4rem 0 0.5rem; border-bottom-width: 1px; padding-bottom: 0.25rem; }
-  .book p, .book li, .book .item-list li { font-size: 1rem; }
-  .book p { margin: 0.6rem 0; }
-  .book ul { margin: 0.6rem 0 0.6rem 1.4rem; }
-  .char-top { gap: 1.2rem; }
-  .char-top img { border-width: 2px; }
-  .book .box { border-width: 2px; border-radius: 14px 5px 16px 6px / 6px 15px 5px 14px; padding: 1rem 1.2rem 1.2rem; }
-  .book .box h2 { font-size: 1.4rem; margin-bottom: 0.6rem; padding-bottom: 0.3rem; border-bottom-width: 1px; }
-  .book .item-list { margin-bottom: 0.8rem; }
-  .book .item-list li { padding: 0.3rem 0.1rem; border-bottom-width: 1px; }
-  .book .add-form { gap: 0.6rem; }
-  .book .add-form input { font-size: 1rem; border-bottom-width: 1px; padding: 0.55rem 0.3rem; }
-  .book .add-form button { font-size: 1.05rem; border-width: 1px; border-radius: 8px 3px 9px 4px / 4px 8px 3px 8px; padding: 0.55rem 1.2rem; }
-}
-
-/* ===== Small screens: stack hero vertically, seal first ===== */
-
-@media (max-width: 720px) {
-  .hero { flex-direction: column; }
-  .session-seal { order: -1; }
-}
-
-/* ===== Phone app chrome ===== */
-
-.tab-bar { display: none; }
-
-@media (max-width: 820px) {
-
-  /* the portrait artwork as a fixed backdrop — iOS Safari ignores
-     background-attachment: fixed, so it lives on a fixed pseudo-element */
-  body { background-image: none; }
-
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    background: #221a12 url('../assets/background-mobile.jpg') center / cover no-repeat;
-  }
-
-  /* the tab bar replaces the top nav and the ink pot */
-  nav.site-nav { display: none; }
-  .inkpot-link { display: none; }
-
-  /* room for the tab bar */
-  body { padding-bottom: calc(4.6rem + env(safe-area-inset-bottom)); }
-
-  /* the content area IS the paper in the artwork: a fixed box matching
-     where background-size: cover paints the sheet, scrolling internally */
-  body {
-    --art-w: max(100vw, calc(100vh * 0.5628));
-    --art-h: max(100vh, calc(100vw * 1.7768));
-  }
-
-  main.page,
-  body.book-page main {
-    position: fixed;
-    left: 50%;
-    /* paper zone: 11.5% / 14.5%, 77% wide, 69% tall (center at 49% height) */
-    top: calc(50% - var(--art-h) * 0.01);
-    transform: translate(-50%, -50%);
-    width: calc(var(--art-w) * 0.77);
-    max-width: none;
-    height: calc(var(--art-h) * 0.69);
-    margin: 0;
-    padding: 0.5rem 0.6rem 1.5rem;
-    overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(58, 46, 36, 0.45) transparent;
-    background: transparent;
-    border: none;
-    border-radius: 0;
-    box-shadow: none;
-  }
-
-  /* slim header so it stays on the dark wood above the paper */
-  .site-header { padding: 0.7rem 1rem 0; }
-  .ornament { display: none; }
-
-  .tab-bar {
-    display: flex;
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 100;
-    background: rgba(22, 15, 10, 0.96);
-    border-top: 1px solid rgba(236, 223, 194, 0.35);
-    padding-bottom: env(safe-area-inset-bottom);
-  }
-
-  .tab-bar a {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.1rem;
-    padding: 0.5rem 0 0.55rem;
-    text-decoration: none;
-    color: var(--candlelight-dim);
-    font-family: 'IM Fell English SC', Georgia, serif;
-    font-size: 0.72rem;
-    letter-spacing: 0.03em;
-  }
-
-  .tab-bar .tab-icon { font-size: 1.4rem; line-height: 1.2; }
-
-  .tab-bar a[aria-current="page"] {
-    color: var(--candlelight);
-    background: rgba(236, 223, 194, 0.10);
-  }
+.tab-bar a[aria-current="page"] {
+  color: var(--candlelight);
+  background: rgba(236, 223, 194, 0.10);
 }

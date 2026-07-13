@@ -7,68 +7,62 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=2">
+  <link rel="stylesheet" href="css/style.css?v=3">
   <meta name="theme-color" content="#221a12">
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="assets/icon-192.png">
 </head>
-<body class="book-page">
+<body>
 
-  <div class="book">
+  <main class="page" data-character="luna">
 
-    <a class="inkpot-link" href="session.html" aria-label="Current session" title="Back to the session"></a>
-
-    <main data-character="luna">
-
-      <section class="page-left">
-        <div class="char-top">
-          <img src="assets/luna.jpg" alt="Luna, the hooded witch, stirring her cauldron beneath the stars">
-          <div>
-            <h1>Luna</h1>
-            <p class="stat-line">Human<br>Wizard,<br>learned through life</p>
-          </div>
+    <section class="page-left">
+      <div class="char-top">
+        <img src="assets/luna.jpg" alt="Luna, the hooded witch, stirring her cauldron beneath the stars">
+        <div>
+          <h1>Luna</h1>
+          <p class="stat-line">Human · Wizard,<br>learned through life</p>
         </div>
+      </div>
 
-        <h3>Origin</h3>
-        <p>
-          A bookish girl from a crumbling library in a very small town, who
-          wandered off one day in search of a destiny… but hasn't quite
-          figured out what it is.
-        </p>
+      <h3>Origin</h3>
+      <p>
+        A bookish girl from a crumbling library in a very small town, who
+        wandered off one day in search of a destiny… but hasn't quite
+        figured out what it is.
+      </p>
 
-        <h3>Personality</h3>
-        <ul>
-          <li>Constantly stressed about being late, even when there's nothing to be late to.</li>
-          <li>Overthinks everything, then forgets the important points in the moment when it counts.</li>
-          <li>Hoards everything — something for every memory — trying to remember it all.</li>
-        </ul>
+      <h3>Personality</h3>
+      <ul>
+        <li>Constantly stressed about being late, even when there's nothing to be late to.</li>
+        <li>Overthinks everything, then forgets the important points in the moment when it counts.</li>
+        <li>Hoards everything — something for every memory — trying to remember it all.</li>
+      </ul>
+    </section>
+
+    <section class="page-right">
+
+      <section class="box">
+        <h2>Inventory</h2>
+        <ul class="item-list" data-box="inventory"></ul>
+        <form class="add-form" data-box="inventory">
+          <input type="text" placeholder="A new possession…" aria-label="New inventory item">
+          <button type="submit">Add</button>
+        </form>
       </section>
 
-      <section class="page-right">
-
-        <section class="box">
-          <h2>Inventory</h2>
-          <ul class="item-list" data-box="inventory"></ul>
-          <form class="add-form" data-box="inventory">
-            <input type="text" placeholder="A new possession…" aria-label="New inventory item">
-            <button type="submit">Add</button>
-          </form>
-        </section>
-
-        <section class="box">
-          <h2>Spells</h2>
-          <ul class="item-list" data-box="spells"></ul>
-          <form class="add-form" data-box="spells">
-            <input type="text" placeholder="A new incantation…" aria-label="New spell">
-            <button type="submit">Add</button>
-          </form>
-        </section>
-
+      <section class="box">
+        <h2>Spells</h2>
+        <ul class="item-list" data-box="spells"></ul>
+        <form class="add-form" data-box="spells">
+          <input type="text" placeholder="A new incantation…" aria-label="New spell">
+          <button type="submit">Add</button>
+        </form>
       </section>
 
-    </main>
+    </section>
 
-  </div>
+  </main>
 
   <nav class="tab-bar" aria-label="App navigation">
     <a href="session.html"><span class="tab-icon">🕯️</span>Session</a>
@@ -77,7 +71,7 @@
     <a href="luna.html" aria-current="page"><span class="tab-icon">🌙</span>Luna</a>
   </nav>
 
-  <script type="module" src="js/character.js?v=2"></script>
+  <script type="module" src="js/character.js?v=3"></script>
 
 </body>
 </html>

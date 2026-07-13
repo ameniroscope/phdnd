@@ -7,73 +7,67 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=2">
+  <link rel="stylesheet" href="css/style.css?v=3">
   <meta name="theme-color" content="#221a12">
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="assets/icon-192.png">
 </head>
-<body class="book-page">
+<body>
 
-  <div class="book">
+  <main class="page" data-character="pip">
 
-    <a class="inkpot-link" href="session.html" aria-label="Current session" title="Back to the session"></a>
-
-    <main data-character="pip">
-
-      <section class="page-left">
-        <div class="char-top">
-          <img src="assets/pip.jpg" alt="Pip, the raccoon wizard, reading from a smoking grimoire">
-          <div>
-            <h1>Pip</h1>
-            <p class="stat-line">Pipcap Sporebliss<br>Raccoonling<br>Mushroom Druid,<br>Circle of Spores</p>
-          </div>
+    <section class="page-left">
+      <div class="char-top">
+        <img src="assets/pip.jpg" alt="Pip, the raccoon druid, reading from a smoking grimoire among his animal friends">
+        <div>
+          <h1>Pip</h1>
+          <p class="stat-line">Pipcap Sporebliss · Raccoonling<br>Mushroom Druid, Circle of Spores</p>
         </div>
+      </div>
 
-        <h3>Origin</h3>
-        <p>
-          Abandoned as a pup in the heart of the Whispering Forest, Pipcap was
-          lovingly raised by sentient mushrooms and has lived as a hermit in
-          the forest ever since.
-        </p>
-        <p>
-          Raccoonlings are small forest folk with nimble hands, striped tails,
-          and a knack for scavenging shiny things and rare herbs. They're
-          nocturnal, clever, and often underestimated.
-        </p>
+      <h3>Origin</h3>
+      <p>
+        Abandoned as a pup in the heart of the Whispering Forest, Pipcap was
+        lovingly raised by sentient mushrooms and has lived as a hermit in
+        the forest ever since.
+      </p>
+      <p>
+        Raccoonlings are small forest folk with nimble hands, striped tails,
+        and a knack for scavenging shiny things and rare herbs. They're
+        nocturnal, clever, and often underestimated.
+      </p>
 
-        <h3>Personality</h3>
-        <ul>
-          <li>Always amused, giggling, slightly high — and very protective of his snacks.</li>
-          <li>Talks to mushrooms through their mycelium network (they are old friends).</li>
-          <li>Finds joy and beauty in rot and decay.</li>
-        </ul>
+      <h3>Personality</h3>
+      <ul>
+        <li>Always amused, giggling, slightly high — and very protective of his snacks.</li>
+        <li>Talks to mushrooms through their mycelium network (they are old friends).</li>
+        <li>Finds joy and beauty in rot and decay.</li>
+      </ul>
+    </section>
+
+    <section class="page-right">
+
+      <section class="box">
+        <h2>Inventory</h2>
+        <ul class="item-list" data-box="inventory"></ul>
+        <form class="add-form" data-box="inventory">
+          <input type="text" placeholder="A new possession…" aria-label="New inventory item">
+          <button type="submit">Add</button>
+        </form>
       </section>
 
-      <section class="page-right">
-
-        <section class="box">
-          <h2>Inventory</h2>
-          <ul class="item-list" data-box="inventory"></ul>
-          <form class="add-form" data-box="inventory">
-            <input type="text" placeholder="A new possession…" aria-label="New inventory item">
-            <button type="submit">Add</button>
-          </form>
-        </section>
-
-        <section class="box">
-          <h2>Spells</h2>
-          <ul class="item-list" data-box="spells"></ul>
-          <form class="add-form" data-box="spells">
-            <input type="text" placeholder="A new incantation…" aria-label="New spell">
-            <button type="submit">Add</button>
-          </form>
-        </section>
-
+      <section class="box">
+        <h2>Spells</h2>
+        <ul class="item-list" data-box="spells"></ul>
+        <form class="add-form" data-box="spells">
+          <input type="text" placeholder="A new incantation…" aria-label="New spell">
+          <button type="submit">Add</button>
+        </form>
       </section>
 
-    </main>
+    </section>
 
-  </div>
+  </main>
 
   <nav class="tab-bar" aria-label="App navigation">
     <a href="session.html"><span class="tab-icon">🕯️</span>Session</a>
@@ -82,7 +76,7 @@
     <a href="luna.html"><span class="tab-icon">🌙</span>Luna</a>
   </nav>
 
-  <script type="module" src="js/character.js?v=2"></script>
+  <script type="module" src="js/character.js?v=3"></script>
 
 </body>
 </html>
