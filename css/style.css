@@ -426,13 +426,13 @@ body.book-page {
   /* ---- zone placement: tune these by hand ----
      All values are % of the artwork (left/top measured from its top-left
      corner). The dashed outlines further down show them live. */
-  --page-top: 17%;      /* top edge of both pages   */
-  --page-height: 64%;   /* height of both pages     */
-  --page-width: 25%;    /* width of each page       */
-  --left-page-x: 24%;   /* left edge of left page   */
-  --right-page-x: 51.5%;/* left edge of right page  */
-  --inkpot-x: 24.5%;    /* left edge of ink pot     */
-  --inkpot-y: 0.5%;     /* top edge of ink pot      */
+  --page-top: 17%;
+  --page-height: 65%;
+  --page-width: 28%;
+  --left-page-x: 20%;
+  --right-page-x: 53%;
+  --inkpot-x: 24.5%; 
+  --inkpot-y: 0.5%;   
   --inkpot-width: 8.5%;
   --inkpot-height: 12%;
 }
