@@ -32,7 +32,7 @@
     <section id="toc">
       <h1>The Chronicles</h1>
       <p style="text-align: center;"><em>An annotated bibliography of adventures past.</em></p>
-      <ol class="toc-list" id="toc-list"></ol>
+      <div class="gallery" id="gallery"></div>
     </section>
 
     <!-- Chapter reader -->
@@ -54,7 +54,7 @@
     const NUM_CHAPTERS = 7;
 
     const tocSection = document.getElementById('toc');
-    const tocList = document.getElementById('toc-list');
+    const gallery = document.getElementById('gallery');
     const reader = document.getElementById('reader');
     const chapters = []; // { title, paragraphs }
 
@@ -114,18 +114,38 @@
       results.forEach((r, i) => {
         if (r.status !== 'fulfilled') return;
         chapters[i] = r.value;
-        const li = document.createElement('li');
-        const a = document.createElement('a');
-        a.href = `#chapter-${i + 1}`;
-        a.textContent = r.value.title;
-        li.appendChild(a);
-        tocList.appendChild(li);
+        const n = i + 1;
+
+        const card = document.createElement('a');
+        card.className = 'chapter-card';
+        card.href = `#chapter-${n}`;
+
+        // artwork: chronicles/chapterN.png; ornament card when there is none
+        const art = document.createElement('span');
+        art.className = 'card-art';
+        const img = document.createElement('img');
+        img.src = `chronicles/chapter${n}.png`;
+        img.loading = 'lazy';
+        img.alt = '';
+        img.addEventListener('error', () => {
+          img.remove();
+          art.classList.add('no-image');
+          art.textContent = '❦';
+        });
+        art.appendChild(img);
+
+        const title = document.createElement('span');
+        title.className = 'card-title';
+        title.textContent = r.value.title;
+
+        card.append(art, title);
+        gallery.appendChild(card);
       });
       if (chapters.length === 0) {
         const msg = location.protocol === 'file:'
           ? 'The chronicles cannot be read when this page is opened as a local file — visit the published site instead.'
           : 'No chronicles have been inscribed yet.';
-        tocList.insertAdjacentHTML('beforebegin',
+        gallery.insertAdjacentHTML('beforebegin',
           `<p style="text-align:center;"><em>${msg}</em></p>`);
       }
       route();

@@ -237,25 +237,64 @@ main.page ul { margin: 0.8rem 0 0.8rem 1.5rem; }
   color: var(--ink-soft);
 }
 
-/* --- chronicles: table of contents & reader --- */
+/* --- chronicles: chapter gallery & reader --- */
 
-.toc-list {
-  list-style: none;
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 2rem 1.5rem;
   margin: 2rem 0;
 }
 
-.toc-list li {
-  border-bottom: 1px dotted var(--ink-soft);
-  padding: 0.55rem 0.2rem;
-}
-
-.toc-list a {
-  font-family: 'IM Fell English SC', Georgia, serif;
-  font-size: 1.25rem;
+.chapter-card {
+  display: block;
   text-decoration: none;
+  text-align: center;
+  transition: transform 0.2s ease;
 }
 
-.toc-list a:hover { border-bottom: 2px solid var(--accent); }
+.chapter-card:hover { transform: translateY(-4px); }
+
+.card-art {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 3 / 4;
+}
+
+.card-art img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 5px 12px rgba(28, 20, 16, 0.35));
+}
+
+.card-art.no-image {
+  font-size: 3rem;
+  color: var(--accent);
+  border: 2px solid rgba(58, 46, 36, 0.45);
+  border-radius: 14px 5px 16px 6px / 6px 15px 5px 14px;
+}
+
+.card-title {
+  display: block;
+  margin-top: 0.7rem;
+  font-family: 'IM Fell English SC', Georgia, serif;
+  font-size: 1.15rem;
+  line-height: 1.3;
+  color: var(--ink);
+}
+
+.chapter-card:hover .card-title { text-decoration: underline; }
+
+@media (max-width: 820px) {
+  .gallery {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.4rem 0.9rem;
+  }
+  .card-title { font-size: 0.95rem; }
+}
 
 #reader h1 { margin-bottom: 1.5rem; }
 
