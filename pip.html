@@ -9,64 +9,68 @@
   <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="book-page">
 
-  <header class="site-header">
-    <h1 class="site-title"><a href="index.html">PhDnD</a></h1>
-    <p class="ornament">☽ ✦ ❦ ✦ ☾</p>
-    <nav class="site-nav">
-      <a href="index.html">Home</a>
-      <a href="session.html">Current Session</a>
-      <a href="chronicles.html">Chronicles</a>
-      <a href="pip.html" aria-current="page">Pip</a>
-      <a href="luna.html">Luna</a>
-    </nav>
-  </header>
+  <div class="book">
 
-  <main class="page character-page" data-character="pip">
-    <h1>Pipcap (Pip) Sporebliss</h1>
-	<p class="stat-line">Raccoonling · Mushroom Druid, Circle of Spores</p>
+    <a class="inkpot-link" href="index.html" aria-label="Home" title="Back to the desk"></a>
 
-    <div class="char-hero">
-      <img src="assets/pip.jpg" alt="Pip, the raccoon wizard, reading from a smoking grimoire">
-      <div class="char-desc">
+    <main data-character="pip">
 
-		<h3>Race</h3>
-        </p>Raccoonlings are small forest folk with nimble hands, striped tails, and a knack for scavenging shiny things and rare herbs. They're nocturnal, clever, and often underestimated.</p>
+      <section class="page-left">
+        <div class="char-top">
+          <img src="assets/pip.jpg" alt="Pip, the raccoon wizard, reading from a smoking grimoire">
+          <div>
+            <h1>Pip</h1>
+            <p class="stat-line">Pipcap Sporebliss<br>Raccoonling<br>Mushroom Druid,<br>Circle of Spores</p>
+          </div>
+        </div>
+
+        <h3>Origin</h3>
+        <p>
+          Abandoned as a pup in the heart of the Whispering Forest, Pipcap was
+          lovingly raised by sentient mushrooms and has lived as a hermit in
+          the forest ever since.
         </p>
-		<h3>Origin</h3>
-        </p>Abandoned as a pup in the heart of the Whispering Forest, Pipcap was lovingly raised by sentient mushrooms and has lived as a hermit in the forest ever since.</p>
+        <p>
+          Raccoonlings are small forest folk with nimble hands, striped tails,
+          and a knack for scavenging shiny things and rare herbs. They're
+          nocturnal, clever, and often underestimated.
+        </p>
+
         <h3>Personality</h3>
         <ul>
           <li>Always amused, giggling, slightly high — and very protective of his snacks.</li>
           <li>Talks to mushrooms through their mycelium network (they are old friends).</li>
           <li>Finds joy and beauty in rot and decay.</li>
         </ul>
-      </div>
-    </div>
-
-    <div class="char-boxes">
-
-      <section class="box">
-        <h2>Inventory</h2>
-        <ul class="item-list" data-box="inventory"></ul>
-        <form class="add-form" data-box="inventory">
-          <input type="text" placeholder="A new possession…" aria-label="New inventory item">
-          <button type="submit">Add</button>
-        </form>
       </section>
 
-      <section class="box">
-        <h2>Spells</h2>
-        <ul class="item-list" data-box="spells"></ul>
-        <form class="add-form" data-box="spells">
-          <input type="text" placeholder="A new incantation…" aria-label="New spell">
-          <button type="submit">Add</button>
-        </form>
+      <section class="page-right">
+
+        <section class="box">
+          <h2>Inventory</h2>
+          <ul class="item-list" data-box="inventory"></ul>
+          <form class="add-form" data-box="inventory">
+            <input type="text" placeholder="A new possession…" aria-label="New inventory item">
+            <button type="submit">Add</button>
+          </form>
+        </section>
+
+        <section class="box">
+          <h2>Spells</h2>
+          <ul class="item-list" data-box="spells"></ul>
+          <form class="add-form" data-box="spells">
+            <input type="text" placeholder="A new incantation…" aria-label="New spell">
+            <button type="submit">Add</button>
+          </form>
+        </section>
+
       </section>
 
-    </div>
-  </main>
+    </main>
+
+  </div>
 
   <script type="module" src="js/character.js"></script>
 

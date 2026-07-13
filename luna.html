@@ -9,66 +9,63 @@
   <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="book-page">
 
-  <header class="site-header">
-    <h1 class="site-title"><a href="index.html">PhDnD</a></h1>
-    <p class="ornament">☽ ✦ ❦ ✦ ☾</p>
-    <nav class="site-nav">
-      <a href="index.html">Home</a>
-      <a href="session.html">Current Session</a>
-      <a href="chronicles.html">Chronicles</a>
-      <a href="pip.html">Pip</a>
-      <a href="luna.html" aria-current="page">Luna</a>
-    </nav>
-  </header>
+  <div class="book">
 
-  <main class="page character-page" data-character="luna">
-    <h1>Luna</h1>
+    <a class="inkpot-link" href="index.html" aria-label="Home" title="Back to the desk"></a>
 
-    <div class="char-hero">
-      <img src="assets/luna.jpg" alt="Luna, the hooded witch, stirring her cauldron beneath the stars">
-      <div class="char-desc">
-        <p class="stat-line">Human · Wizard, learned through life</p>
+    <main data-character="luna">
+
+      <section class="page-left">
+        <div class="char-top">
+          <img src="assets/luna.jpg" alt="Luna, the hooded witch, stirring her cauldron beneath the stars">
+          <div>
+            <h1>Luna</h1>
+            <p class="stat-line">Human<br>Wizard,<br>learned through life</p>
+          </div>
+        </div>
+
+        <h3>Origin</h3>
         <p>
-          <strong>Origin —</strong> a bookish girl from a crumbling library in
-          a very small town.
+          A bookish girl from a crumbling library in a very small town, who
+          wandered off one day in search of a destiny… but hasn't quite
+          figured out what it is.
         </p>
+
         <h3>Personality</h3>
         <ul>
           <li>Constantly stressed about being late, even when there's nothing to be late to.</li>
           <li>Overthinks everything, then forgets the important points in the moment when it counts.</li>
           <li>Hoards everything — something for every memory — trying to remember it all.</li>
         </ul>
-        <p>
-          <strong>Goal —</strong> wandered off one day in search of a destiny…
-          but hasn't quite figured out what it is.
-        </p>
-      </div>
-    </div>
-
-    <div class="char-boxes">
-
-      <section class="box">
-        <h2>Inventory</h2>
-        <ul class="item-list" data-box="inventory"></ul>
-        <form class="add-form" data-box="inventory">
-          <input type="text" placeholder="A new possession…" aria-label="New inventory item">
-          <button type="submit">Add</button>
-        </form>
       </section>
 
-      <section class="box">
-        <h2>Spells</h2>
-        <ul class="item-list" data-box="spells"></ul>
-        <form class="add-form" data-box="spells">
-          <input type="text" placeholder="A new incantation…" aria-label="New spell">
-          <button type="submit">Add</button>
-        </form>
+      <section class="page-right">
+
+        <section class="box">
+          <h2>Inventory</h2>
+          <ul class="item-list" data-box="inventory"></ul>
+          <form class="add-form" data-box="inventory">
+            <input type="text" placeholder="A new possession…" aria-label="New inventory item">
+            <button type="submit">Add</button>
+          </form>
+        </section>
+
+        <section class="box">
+          <h2>Spells</h2>
+          <ul class="item-list" data-box="spells"></ul>
+          <form class="add-form" data-box="spells">
+            <input type="text" placeholder="A new incantation…" aria-label="New spell">
+            <button type="submit">Add</button>
+          </form>
+        </section>
+
       </section>
 
-    </div>
-  </main>
+    </main>
+
+  </div>
 
   <script type="module" src="js/character.js"></script>
 

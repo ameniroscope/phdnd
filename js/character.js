@@ -97,7 +97,10 @@ for (const form of document.querySelectorAll('form[data-box]')) {
 // Live sync: re-render whenever the document changes (including changes
 // made by the other player on their own device).
 onSnapshot(charDoc, (snap) => {
-  loaded = true;
+  // An empty from-cache snapshot means the server hasn't answered yet
+  // (e.g. offline, or the Firestore database doesn't exist) — keep the
+  // loading message rather than claiming the lists are empty.
+  loaded = !(snap.metadata.fromCache && !snap.exists());
   const data = snap.data() || {};
   items.inventory = data.inventory || [];
   items.spells = data.spells || [];

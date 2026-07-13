@@ -397,6 +397,240 @@ main.page ul { margin: 0.8rem 0 0.8rem 1.5rem; }
   color: var(--parchment);
 }
 
+/* ===== Character pages: written inside the open book ===== */
+
+/* The book keeps the artwork's exact aspect ratio and scales to fit the
+   viewport; everything inside is positioned in % of the image and sized in
+   cqw (1% of book width) so text and art scale together. */
+
+body.book-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.book {
+  position: relative;
+  width: min(100vw, calc(100vh * 1.7768));
+  aspect-ratio: 1672 / 941;
+  background: url('../assets/background.jpg') center / 100% 100% no-repeat;
+  container-type: inline-size;
+}
+
+/* --- the ink pot is the Home button --- */
+
+.inkpot-link {
+  position: absolute;
+  left: 24.5%;
+  top: 0.5%;
+  width: 8.5%;
+  height: 12%;
+  border-radius: 30%;
+  text-decoration: none;
+}
+
+.inkpot-link::after {
+  content: 'Home';
+  position: absolute;
+  top: 105%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'IM Fell English SC', Georgia, serif;
+  font-size: 1.2cqw;
+  color: var(--candlelight);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+.inkpot-link:hover { box-shadow: 0 0 2.2cqw 0.4cqw rgba(236, 223, 194, 0.30); }
+.inkpot-link:hover::after { opacity: 1; }
+
+/* --- the two pages of the spread --- */
+
+.page-left,
+.page-right {
+  position: absolute;
+  top: 17%;
+  height: 64%;
+  width: 25%;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(58, 46, 36, 0.45) transparent;
+  color: var(--ink);
+}
+
+.page-left { left: 24%; padding-right: 0.8cqw; }
+.page-right { left: 51.5%; display: flex; flex-direction: column; gap: 3.5%; }
+
+.book h1 {
+  font-size: 2.4cqw;
+  margin-bottom: 0.3cqw;
+}
+
+.book .stat-line {
+  font-size: 1.05cqw;
+  line-height: 1.5;
+  margin-bottom: 0;
+}
+
+.book h3 {
+  font-size: 1.5cqw;
+  margin: 1.6cqw 0 0.5cqw;
+  border-bottom: 0.09cqw solid var(--ink-soft);
+  padding-bottom: 0.25cqw;
+}
+
+.book p,
+.book li {
+  font-size: 1.08cqw;
+  line-height: 1.55;
+}
+
+.book p { margin: 0.5cqw 0; }
+
+.book ul { margin: 0.5cqw 0 0.5cqw 1.6cqw; }
+
+.char-top {
+  display: flex;
+  gap: 1.4cqw;
+  align-items: flex-start;
+}
+
+.char-top img {
+  width: 38%;
+  border: 0.18cqw solid var(--frame);
+  border-radius: 45% 45% 4% 4% / 30% 30% 2% 2%;
+}
+
+/* --- inventory & spell boxes drawn in ink on the right page --- */
+
+.book .box {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+  box-shadow: none;
+  border: 0.16cqw solid rgba(58, 46, 36, 0.85);
+  /* uneven radii for a hand-drawn look */
+  border-radius: 1.2cqw 0.4cqw 1.4cqw 0.5cqw / 0.5cqw 1.3cqw 0.4cqw 1.2cqw;
+  padding: 0.9cqw 1.2cqw 1.1cqw;
+}
+
+.book .box h2 {
+  font-size: 1.7cqw;
+  margin: 0 0 0.6cqw;
+  padding-bottom: 0.3cqw;
+  border-bottom: 0.09cqw solid var(--ink-soft);
+  text-align: center;
+}
+
+.book .item-list {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(58, 46, 36, 0.45) transparent;
+  margin: 0 0 0.8cqw;
+}
+
+.book .item-list li {
+  font-size: 1.08cqw;
+  padding: 0.3cqw 0.1cqw;
+  border-bottom: 0.09cqw dotted rgba(58, 46, 36, 0.5);
+}
+
+.book .add-form { gap: 0.6cqw; }
+
+.book .add-form input {
+  font-size: 1.05cqw;
+  background: transparent;
+  border: none;
+  border-bottom: 0.12cqw solid var(--ink-soft);
+  border-radius: 0;
+  padding: 0.25cqw 0.3cqw;
+}
+
+.book .add-form input:focus {
+  outline: none;
+  border-bottom-color: var(--ink);
+}
+
+.book .add-form button {
+  font-size: 1.1cqw;
+  background: transparent;
+  border: 0.12cqw solid var(--ink-soft);
+  border-radius: 0.6cqw 0.25cqw 0.7cqw 0.3cqw / 0.3cqw 0.6cqw 0.25cqw 0.6cqw;
+  padding: 0.15cqw 0.9cqw;
+}
+
+.book .add-form button:hover {
+  background: var(--ink);
+  color: var(--parchment);
+}
+
+/* --- small screens: the book art is too small to write in, fall back to
+       stacked parchment panels --- */
+
+@media (max-width: 820px) {
+  body.book-page { display: block; }
+
+  .book {
+    width: auto;
+    aspect-ratio: auto;
+    background: none;
+  }
+
+  .inkpot-link {
+    position: static;
+    display: block;
+    width: auto;
+    height: auto;
+    text-align: center;
+    padding: 1.2rem 0 0.2rem;
+    font-family: 'IM Fell English SC', Georgia, serif;
+    font-size: 1.3rem;
+    color: var(--candlelight);
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+  }
+
+  .inkpot-link::before { content: '⌂ Home'; }
+  .inkpot-link::after { display: none; }
+
+  .page-left,
+  .page-right {
+    position: static;
+    width: calc(100% - 2rem);
+    height: auto;
+    margin: 1rem auto;
+    padding: 1.5rem 1.3rem;
+    background: var(--parchment);
+    border: 1px solid rgba(42, 32, 24, 0.7);
+    border-radius: 6px;
+    box-shadow: 0 12px 34px rgba(0, 0, 0, 0.55);
+    overflow: visible;
+  }
+
+  .book h1 { font-size: 2rem; }
+  .book .stat-line { font-size: 1rem; }
+  .book h3 { font-size: 1.35rem; margin: 1.4rem 0 0.5rem; border-bottom-width: 1px; padding-bottom: 0.25rem; }
+  .book p, .book li, .book .item-list li { font-size: 1rem; }
+  .book p { margin: 0.6rem 0; }
+  .book ul { margin: 0.6rem 0 0.6rem 1.4rem; }
+  .char-top { gap: 1.2rem; }
+  .char-top img { border-width: 2px; }
+  .book .box { border-width: 2px; border-radius: 14px 5px 16px 6px / 6px 15px 5px 14px; padding: 1rem 1.2rem 1.2rem; }
+  .book .box h2 { font-size: 1.4rem; margin-bottom: 0.6rem; padding-bottom: 0.3rem; border-bottom-width: 1px; }
+  .book .item-list { margin-bottom: 0.8rem; }
+  .book .item-list li { padding: 0.3rem 0.1rem; border-bottom-width: 1px; }
+  .book .add-form { gap: 0.6rem; }
+  .book .add-form input { font-size: 1rem; border-bottom-width: 1px; padding: 0.3rem; }
+  .book .add-form button { font-size: 1.05rem; border-width: 1px; border-radius: 8px 3px 9px 4px / 4px 8px 3px 8px; padding: 0.2rem 1rem; }
+}
+
 /* ===== Small screens: stack hero vertically, seal first ===== */
 
 @media (max-width: 720px) {
