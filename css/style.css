@@ -656,19 +656,37 @@ body.book-page {
   }
   .inkpot-link::after { display: none; }
 
+  /* text sits directly on the artwork's paper — no panels */
   .page-left,
   .page-right {
     position: static;
-    width: calc(100% - 2rem);
+    width: auto;
     height: auto;
-    margin: 1rem auto;
-    padding: 1.5rem 1.3rem;
-    background: var(--parchment);
-    border: 1px solid rgba(42, 32, 24, 0.7);
-    border-radius: 6px;
-    box-shadow: 0 12px 34px rgba(0, 0, 0, 0.55);
+    margin: 0 0 1.5rem;
+    padding: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
     overflow: visible;
   }
+
+  /* portrait without a frame, its white paper blended into the parchment */
+  .char-top {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .char-top img {
+    width: 58%;
+    border: none;
+    border-radius: 0;
+    mix-blend-mode: multiply;
+  }
+
+  .book h1 { text-align: center; }
+  .book .stat-line { text-align: center; }
+  .book h3 { text-align: center; }
 
   .book h1 { font-size: 2rem; }
   .book .stat-line { font-size: 1rem; }
@@ -719,10 +737,37 @@ body.book-page {
   /* room for the tab bar */
   body { padding-bottom: calc(4.6rem + env(safe-area-inset-bottom)); }
 
-  /* panels blend with the parchment artwork behind them */
+  /* the content area IS the paper in the artwork: a fixed box matching
+     where background-size: cover paints the sheet, scrolling internally */
+  body {
+    --art-w: max(100vw, calc(100vh * 0.5628));
+    --art-h: max(100vh, calc(100vw * 1.7768));
+  }
+
   main.page,
-  .page-left,
-  .page-right { background: rgba(239, 228, 203, 0.93); }
+  body.book-page main {
+    position: fixed;
+    left: 50%;
+    /* paper zone: 11.5% / 14.5%, 77% wide, 69% tall (center at 49% height) */
+    top: calc(50% - var(--art-h) * 0.01);
+    transform: translate(-50%, -50%);
+    width: calc(var(--art-w) * 0.77);
+    max-width: none;
+    height: calc(var(--art-h) * 0.69);
+    margin: 0;
+    padding: 0.5rem 0.6rem 1.5rem;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(58, 46, 36, 0.45) transparent;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  /* slim header so it stays on the dark wood above the paper */
+  .site-header { padding: 0.7rem 1rem 0; }
+  .ornament { display: none; }
 
   .tab-bar {
     display: flex;
