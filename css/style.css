@@ -403,29 +403,56 @@ main.page ul { margin: 0.8rem 0 0.8rem 1.5rem; }
    viewport; everything inside is positioned in % of the image and sized in
    cqw (1% of book width) so text and art scale together. */
 
+html:has(body.book-page) { overflow: hidden; }
+
 body.book-page {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
 }
 
+/* The book div carries no image of its own — the body background is the only
+   copy. It is sized and centered exactly like `background-size: cover`
+   renders the artwork, so the % zones below always track the painted book. */
 .book {
-  position: relative;
-  width: min(100vw, calc(100vh * 1.7768));
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: max(100vw, calc(100vh * 1.7768));
   aspect-ratio: 1672 / 941;
-  background: url('../assets/background.jpg') center / 100% 100% no-repeat;
   container-type: inline-size;
+
+  /* ---- zone placement: tune these by hand ----
+     All values are % of the artwork (left/top measured from its top-left
+     corner). The dashed outlines further down show them live. */
+  --page-top: 17%;      /* top edge of both pages   */
+  --page-height: 64%;   /* height of both pages     */
+  --page-width: 25%;    /* width of each page       */
+  --left-page-x: 24%;   /* left edge of left page   */
+  --right-page-x: 51.5%;/* left edge of right page  */
+  --inkpot-x: 24.5%;    /* left edge of ink pot     */
+  --inkpot-y: 0.5%;     /* top edge of ink pot      */
+  --inkpot-width: 8.5%;
+  --inkpot-height: 12%;
+}
+
+/* TEMPORARY: dashed outlines showing the zones for manual placement.
+   Delete this block (or just these rules) once everything sits right. */
+.page-left,
+.page-right,
+.inkpot-link {
+  outline: 2px dashed rgba(200, 30, 30, 0.75);
 }
 
 /* --- the ink pot is the Home button --- */
 
 .inkpot-link {
   position: absolute;
-  left: 24.5%;
-  top: 0.5%;
-  width: 8.5%;
-  height: 12%;
+  left: var(--inkpot-x);
+  top: var(--inkpot-y);
+  width: var(--inkpot-width);
+  height: var(--inkpot-height);
   border-radius: 30%;
   text-decoration: none;
 }
@@ -453,17 +480,17 @@ body.book-page {
 .page-left,
 .page-right {
   position: absolute;
-  top: 17%;
-  height: 64%;
-  width: 25%;
+  top: var(--page-top);
+  height: var(--page-height);
+  width: var(--page-width);
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: rgba(58, 46, 36, 0.45) transparent;
   color: var(--ink);
 }
 
-.page-left { left: 24%; padding-right: 0.8cqw; }
-.page-right { left: 51.5%; display: flex; flex-direction: column; gap: 3.5%; }
+.page-left { left: var(--left-page-x); padding-right: 0.8cqw; }
+.page-right { left: var(--right-page-x); display: flex; flex-direction: column; gap: 3.5%; }
 
 .book h1 {
   font-size: 2.4cqw;
@@ -576,13 +603,24 @@ body.book-page {
        stacked parchment panels --- */
 
 @media (max-width: 820px) {
-  body.book-page { display: block; }
+  html:has(body.book-page) { overflow: auto; }
+
+  body.book-page {
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+  }
 
   .book {
+    position: static;
+    transform: none;
     width: auto;
     aspect-ratio: auto;
-    background: none;
   }
+
+  .page-left,
+  .page-right,
+  .inkpot-link { outline: none; }
 
   .inkpot-link {
     position: static;
