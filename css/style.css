@@ -96,14 +96,13 @@ main.page h1 {
 
 main.page h2 {
   font-size: 1.4rem;
-  margin: 1.6rem 0 0.6rem;
+  margin: 0.6rem 0 0.6rem;
   border-bottom: 1px solid var(--ink-soft);
   padding-bottom: 0.25rem;
 }
 
 main.page h3 {
   font-size: 1.35rem;
-  text-align: center;
   margin: 1.4rem 0 0.5rem;
   border-bottom: 1px solid var(--ink-soft);
   padding-bottom: 0.25rem;
@@ -209,10 +208,9 @@ main.page ul { margin: 0.6rem 0 0.6rem 1.4rem; }
 /* --- inventory & spell boxes drawn in ink --- */
 
 .box {
-  border: 2px solid rgba(58, 46, 36, 0.85);
-  /* uneven radii for a hand-drawn look */
-  border-radius: 14px 5px 16px 6px / 6px 15px 5px 14px;
-  padding: 1rem 1.2rem 1.2rem;
+  border: 1px solid rgba(58, 46, 36, 0.85);
+  border-radius: 14px;
+  padding: 0rem 1.2rem 1.2rem;
   margin-bottom: 1.5rem;
 }
 
