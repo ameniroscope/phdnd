@@ -2,7 +2,7 @@
   "name": "PhDnD — The Phellowship of Archivon",
   "short_name": "PhDnD",
   "description": "Campaign companion: current session, chronicles, and character sheets.",
-  "start_url": "./index.html",
+  "start_url": "./session.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
