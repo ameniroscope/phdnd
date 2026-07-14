@@ -50,6 +50,29 @@ function route() {
 
 window.addEventListener('hashchange', route);
 
+// previous / next between the parts, chronicle-style
+parts.forEach((p, i) => {
+  const nav = document.createElement('nav');
+  nav.className = 'chapter-nav';
+
+  const prev = document.createElement('a');
+  prev.innerHTML = '<span aria-hidden="true">❮</span> Previous';
+  prev.href = `#part-${i}`;
+  prev.style.visibility = i > 0 ? 'visible' : 'hidden';
+
+  const home = document.createElement('a');
+  home.textContent = 'The session';
+  home.href = '#session';
+
+  const next = document.createElement('a');
+  next.innerHTML = 'Next <span aria-hidden="true">❯</span>';
+  next.href = `#part-${i + 2}`;
+  next.style.visibility = i < parts.length - 1 ? 'visible' : 'hidden';
+
+  nav.append(prev, home, next);
+  p.appendChild(nav);
+});
+
 // ---- podcast players -------------------------------------------------------
 
 const players = [];
