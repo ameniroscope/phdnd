@@ -50,8 +50,44 @@ function route() {
 
 window.addEventListener('hashchange', route);
 
-// previous / next between the parts, chronicle-style
+// "mark as read" + previous / next at the end of each part
+const readInfoEls = [];
+const cardBadgeEls = [];
+
+document.querySelectorAll('.session-parts .chapter-card').forEach((card) => {
+  const badge = document.createElement('span');
+  badge.className = 'card-badges';
+  card.appendChild(badge);
+  cardBadgeEls.push(badge);
+});
+
 parts.forEach((p, i) => {
+  const readRow = document.createElement('p');
+  readRow.className = 'read-row';
+
+  const readBtn = document.createElement('button');
+  readBtn.type = 'button';
+  readBtn.className = 'ink-btn';
+  readBtn.textContent = 'Mark as read';
+  readBtn.addEventListener('click', async () => {
+    const c = await chooseCharacter();
+    if (!c) return;
+    try {
+      await setDoc(doc(db, 'Session', SESSION_ID),
+        { [`read_part${i + 1}_${c}`]: true }, { merge: true });
+    } catch (err) {
+      console.error('Failed to mark as read:', err);
+      status('The archive refused the mark — check the connection.');
+    }
+  });
+
+  const readInfo = document.createElement('span');
+  readInfo.className = 'read-info';
+  readInfoEls.push(readInfo);
+
+  readRow.append(readBtn, readInfo);
+  p.appendChild(readRow);
+
   const nav = document.createElement('nav');
   nav.className = 'chapter-nav';
 
@@ -204,21 +240,38 @@ function status(text) {
   statusEl.hidden = !text;
 }
 
-inputEl.addEventListener('click', () => {
-  if (!who) openScrim('who-scrim');
-});
+// ask "who is this?" and resolve with 'luna', 'pip', or null if dismissed
+let whoResolve = null;
+
+function chooseCharacter() {
+  return new Promise((resolve) => {
+    whoResolve = resolve;
+    openScrim('who-scrim');
+  });
+}
 
 for (const btn of document.querySelectorAll('#who-scrim [data-char]')) {
   btn.addEventListener('click', () => {
-    who = btn.dataset.char;
-    speakerEl.textContent = `Answering as ${CHAR_LABEL[who]}`;
-    speakerEl.hidden = false;
-    inputEl.readOnly = false;
-    saveBtn.hidden = false;
     closeScrim('who-scrim');
-    inputEl.focus();
+    if (whoResolve) { whoResolve(btn.dataset.char); whoResolve = null; }
   });
 }
+
+document.getElementById('who-scrim').addEventListener('click', (e) => {
+  if (e.target.id === 'who-scrim' && whoResolve) { whoResolve(null); whoResolve = null; }
+});
+
+inputEl.addEventListener('click', async () => {
+  if (who) return;
+  const c = await chooseCharacter();
+  if (!c) return;
+  who = c;
+  speakerEl.textContent = `Answering as ${CHAR_LABEL[who]}`;
+  speakerEl.hidden = false;
+  inputEl.readOnly = false;
+  saveBtn.hidden = false;
+  inputEl.focus();
+});
 
 document.getElementById('whereto-form').addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -236,9 +289,24 @@ document.getElementById('whereto-form').addEventListener('submit', async (e) => 
   }
 });
 
-// live view of both answers
+// live view of both answers and of who has read each part
+const CHAR_EMOJI = { luna: '🌙', pip: '🍄' };
+
+function renderRead(data) {
+  parts.forEach((_, i) => {
+    const readers = ['luna', 'pip'].filter((c) => data[`read_part${i + 1}_${c}`]);
+    readInfoEls[i].textContent = readers.length
+      ? `Read by ${readers.map((c) => CHAR_LABEL[c]).join(' & ')}`
+      : '';
+    cardBadgeEls[i].textContent = readers.length
+      ? `✓ ${readers.map((c) => CHAR_EMOJI[c]).join(' ')}`
+      : '';
+  });
+}
+
 onSnapshot(doc(db, 'Session', SESSION_ID), (snap) => {
   const data = snap.data() || {};
+  renderRead(data);
   answersEl.replaceChildren(...['luna', 'pip']
     .filter((c) => data[`whereto_${c}`])
     .map((c) => {

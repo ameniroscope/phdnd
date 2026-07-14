@@ -494,6 +494,28 @@ ul { list-style-type: "⟡  "; }
   margin-top: 1.2rem;
 }
 
+.read-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+  margin: 1.4rem 0 0;
+}
+
+.read-info {
+  font-style: italic;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+.card-badges {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  margin-top: 0.2rem;
+  min-height: 1em;
+}
+
 .whereto-speaker {
   font-family: 'IM Fell English SC', Georgia, serif;
   color: var(--ink-soft);
