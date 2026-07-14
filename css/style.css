@@ -340,6 +340,166 @@ ul { list-style-type: "⟡  "; }
   background: rgba(236, 223, 194, 0.10);
 }
 
+/* ===== Session page: parts, podcasts, tiles, map, answers ===== */
+
+.session-parts { grid-template-columns: repeat(3, 1fr); gap: 0.9rem 0.7rem; }
+
+.session-parts .card-art.no-image {
+  font-size: 2rem;
+  font-family: 'IM Fell English SC', Georgia, serif;
+  color: var(--ink-soft);
+}
+
+.back-link {
+  display: inline-block;
+  font-family: 'IM Fell English SC', Georgia, serif;
+  font-size: 1rem;
+  text-decoration: none;
+  margin-bottom: 0.4rem;
+}
+
+.ink-btn {
+  font-family: 'IM Fell English SC', Georgia, serif;
+  font-size: 1.05rem;
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--ink-soft);
+  border-radius: 8px 3px 9px 4px / 4px 8px 3px 8px;
+  padding: 0.55rem 1.2rem;
+  cursor: pointer;
+}
+
+.ink-btn:hover {
+  background: var(--ink);
+  color: var(--parchment);
+}
+
+.ink-btn:disabled {
+  cursor: default;
+  color: var(--ink-soft);
+  background: transparent;
+  opacity: 0.7;
+}
+
+.player {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin: 0.8rem 0 1rem;
+}
+
+.player .track {
+  flex: 1;
+  height: 5px;
+  background: rgba(58, 46, 36, 0.25);
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.player .fill {
+  width: 0;
+  height: 100%;
+  background: var(--ink-soft);
+  border-radius: 3px;
+}
+
+.tile-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.8rem;
+  margin-top: 1rem;
+}
+
+.tile {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'IM Fell English SC', Georgia, serif;
+  font-size: 1.7rem;
+  color: var(--ink-soft);
+  background: transparent;
+  border: 2px solid rgba(58, 46, 36, 0.55);
+  border-radius: 14px 5px 16px 6px / 6px 15px 5px 14px;
+  cursor: pointer;
+}
+
+.tile:hover {
+  background: var(--ink);
+  color: var(--parchment);
+}
+
+.map-row { text-align: center; margin: 1rem 0; }
+
+/* --- overlays --- */
+
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  background: rgba(10, 7, 4, 0.72);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.overlay-card {
+  position: relative;
+  width: 100%;
+  max-width: min(88vw, 420px);
+  max-height: 85vh;
+  overflow-y: auto;
+  background: var(--parchment);
+  border: 2px solid rgba(58, 46, 36, 0.85);
+  border-radius: 14px 5px 16px 6px / 6px 15px 5px 14px;
+  padding: 1.5rem 1.4rem 1.4rem;
+  text-align: center;
+}
+
+.overlay-card.map-card { max-width: min(95vw, 700px); }
+
+.close-btn {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.6rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  color: var(--ink-soft);
+}
+
+.object-art img {
+  max-width: 70%;
+  mix-blend-mode: multiply;
+}
+
+.object-art .glyph { font-size: 3rem; color: var(--accent); }
+
+#map-holder img { max-width: 100%; }
+
+.empty-note {
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+.who-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.2rem;
+}
+
+.whereto-speaker {
+  font-family: 'IM Fell English SC', Georgia, serif;
+  color: var(--ink-soft);
+  text-align: center;
+  margin: 0.5rem 0 0.3rem;
+}
+
+#whereto-answers p { margin: 0.4rem 0; }
+
 /* ===== Session page: editable answers ===== */
 
 .field-input {

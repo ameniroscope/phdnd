@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=5">
+  <link rel="stylesheet" href="css/style.css?v=6">
   <meta name="theme-color" content="#221a12">
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="assets/icon-192.png">
@@ -19,23 +19,88 @@
   </header>
 
   <main class="page">
-    <h1 id="session-title">Current Session</h1>
-    <p class="entry-date" id="session-status" style="text-align: center;">Consulting the archive…</p>
+    <h1 id="session-title">Session I</h1>
+    <p class="entry-date" id="session-status" style="text-align: center;" hidden></p>
 
-    <div id="session-fields"></div>
+    <!-- the session's three cards -->
+    <section id="parts-menu">
+      <div class="gallery session-parts">
+        <a class="chapter-card" href="#part-1">
+          <span class="card-art no-image">I</span>
+          <span class="card-title">Introduction</span>
+        </a>
+        <a class="chapter-card" href="#part-2">
+          <span class="card-art no-image">II</span>
+          <span class="card-title">Discoveries</span>
+        </a>
+        <a class="chapter-card" href="#part-3">
+          <span class="card-art no-image">III</span>
+          <span class="card-title">The Road Ahead</span>
+        </a>
+      </div>
+    </section>
 
-    <div class="session-actions" id="session-actions" hidden>
-      <button id="save-btn" type="button">Inscribe</button>
-      <button id="new-session-btn" type="button" hidden>Begin next session</button>
-    </div>
+    <section class="part" id="part-1" hidden>
+      <a class="back-link" href="#session">❮ Back to the session</a>
+      <h2>Introduction</h2>
+      <div class="player" data-audio="audio/session1-intro.mp3"></div>
+    </section>
 
-    <nav class="chapter-nav" id="session-nav" hidden>
-      <a href="#" id="prev-session"><span aria-hidden="true">❮</span> Previous</a>
-      <a href="#" id="next-session">Next <span aria-hidden="true">❯</span></a>
-    </nav>
+    <section class="part" id="part-2" hidden>
+      <a class="back-link" href="#session">❮ Back to the session</a>
+      <h2>Discoveries</h2>
+      <div class="player" data-audio="audio/session1-discoveries.mp3"></div>
+      <div class="tile-grid" id="tile-grid"></div>
+    </section>
+
+    <section class="part" id="part-3" hidden>
+      <a class="back-link" href="#session">❮ Back to the session</a>
+      <h2>The Road Ahead</h2>
+      <div class="player" data-audio="audio/session1-road.mp3"></div>
+      <p class="map-row"><button class="ink-btn" id="open-map-btn" type="button">🗺 Open the map</button></p>
+
+      <h3>Where should we go?</h3>
+      <div id="whereto-answers"></div>
+      <form id="whereto-form">
+        <p class="whereto-speaker" id="whereto-speaker" hidden></p>
+        <textarea class="field-input" id="whereto-input" placeholder="Tap to answer…" rows="3" readonly></textarea>
+        <div class="session-actions">
+          <button class="ink-btn" id="whereto-save" type="submit" hidden>Inscribe</button>
+        </div>
+      </form>
+    </section>
   </main>
 
-  <script type="module" src="js/session.js?v=1"></script>
+  <!-- object card overlay -->
+  <div class="scrim" id="object-scrim" hidden>
+    <div class="overlay-card" role="dialog" aria-modal="true">
+      <button class="close-btn" type="button" aria-label="Close">✕</button>
+      <div class="object-art" id="object-art"></div>
+      <h2 id="object-title"></h2>
+      <p id="object-text"></p>
+    </div>
+  </div>
+
+  <!-- map overlay -->
+  <div class="scrim" id="map-scrim" hidden>
+    <div class="overlay-card map-card" role="dialog" aria-modal="true">
+      <button class="close-btn" type="button" aria-label="Close">✕</button>
+      <div id="map-holder"></div>
+    </div>
+  </div>
+
+  <!-- who-answers overlay -->
+  <div class="scrim" id="who-scrim" hidden>
+    <div class="overlay-card" role="dialog" aria-modal="true">
+      <h2>Who answers?</h2>
+      <div class="who-buttons">
+        <button class="ink-btn" type="button" data-char="luna">🌙 Luna</button>
+        <button class="ink-btn" type="button" data-char="pip">🍄 Pip</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="js/session.js?v=2"></script>
 
 
   <nav class="tab-bar" aria-label="App navigation">
