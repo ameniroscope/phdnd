@@ -388,19 +388,20 @@ ul { list-style-type: "⟡  "; }
   margin: 0.8rem 0 1rem;
 }
 
-.player .track {
+.player .seek {
   flex: 1;
-  height: 5px;
-  background: rgba(58, 46, 36, 0.25);
-  border-radius: 3px;
+  min-width: 0;
+  accent-color: var(--ink-soft);
   cursor: pointer;
 }
 
-.player .fill {
-  width: 0;
-  height: 100%;
-  background: var(--ink-soft);
-  border-radius: 3px;
+.player .seek:disabled { cursor: default; }
+
+.player .time {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
 .tile-grid {

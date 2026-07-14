@@ -127,11 +127,20 @@ for (const el of document.querySelectorAll('.player')) {
   btn.className = 'ink-btn play-btn';
   btn.textContent = '▶ Listen';
 
-  const track = document.createElement('div');
-  track.className = 'track';
-  const fill = document.createElement('div');
-  fill.className = 'fill';
-  track.appendChild(fill);
+  const seek = document.createElement('input');
+  seek.type = 'range';
+  seek.className = 'seek';
+  seek.min = 0;
+  seek.max = 100;
+  seek.step = 0.1;
+  seek.value = 0;
+  seek.setAttribute('aria-label', 'Position in the recording');
+
+  const time = document.createElement('span');
+  time.className = 'time';
+  time.textContent = '0:00';
+
+  const fmt = (s) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
 
   btn.addEventListener('click', () => {
     if (audio.paused) {
@@ -144,21 +153,37 @@ for (const el of document.querySelectorAll('.player')) {
 
   audio.addEventListener('play', () => { btn.textContent = '⏸ Pause'; });
   audio.addEventListener('pause', () => { btn.textContent = '▶ Listen'; });
-  audio.addEventListener('timeupdate', () => {
-    if (audio.duration) fill.style.width = `${(audio.currentTime / audio.duration) * 100}%`;
+
+  audio.addEventListener('loadedmetadata', () => {
+    time.textContent = `0:00 / ${fmt(audio.duration)}`;
   });
+
+  let dragging = false;
+  let seekPending = false;
+  audio.addEventListener('timeupdate', () => {
+    if (!audio.duration) return;
+    // don't fight the user's thumb while dragging or mid-seek
+    if (!dragging && !seekPending) seek.value = (audio.currentTime / audio.duration) * 100;
+    time.textContent = `${fmt(audio.currentTime)} / ${fmt(audio.duration)}`;
+  });
+  audio.addEventListener('seeked', () => { seekPending = false; });
+
+  // dragging the slider seeks; playback state is left untouched
+  seek.addEventListener('pointerdown', () => { dragging = true; });
+  seek.addEventListener('pointerup', () => { dragging = false; });
+  seek.addEventListener('input', () => {
+    if (!audio.duration) return;
+    seekPending = true;
+    audio.currentTime = (seek.value / 100) * audio.duration;
+  });
+
   audio.addEventListener('error', () => {
     btn.disabled = true;
     btn.textContent = 'Not yet recorded…';
+    seek.disabled = true;
   });
 
-  track.addEventListener('click', (e) => {
-    if (!audio.duration) return;
-    const r = track.getBoundingClientRect();
-    audio.currentTime = ((e.clientX - r.left) / r.width) * audio.duration;
-  });
-
-  el.append(btn, track);
+  el.append(btn, seek, time);
 }
 
 // ---- overlays --------------------------------------------------------------
