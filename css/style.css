@@ -444,6 +444,9 @@ ul { list-style-type: "⟡  "; }
   padding: 1rem;
 }
 
+/* display: flex above would defeat the hidden attribute — never let it */
+.scrim[hidden] { display: none; }
+
 .overlay-card {
   position: relative;
   width: 100%;
