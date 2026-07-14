@@ -77,7 +77,7 @@ a { color: var(--ink); }
 
 main.page {
   position: fixed;
-  left: 50%;
+  left: 51%;
   /* paper zone: 11.5% / 14.5%, 77% wide, 69% tall (center at 49% height) */
   top: calc(50% - var(--art-h) * 0.01);
   transform: translate(-50%, -50%);
@@ -181,6 +181,9 @@ main.page ul { margin: 0.6rem 0 0.6rem 1.4rem; }
 }
 
 /* ===== Character pages ===== */
+
+ul { list-style-type: "⟡  "; }
+/* Sets the marker to a 𝆺 emoji character */
 
 .page-left { margin-bottom: 1.5rem; }
 
@@ -329,4 +332,50 @@ main.page ul { margin: 0.6rem 0 0.6rem 1.4rem; }
 .tab-bar a[aria-current="page"] {
   color: var(--candlelight);
   background: rgba(236, 223, 194, 0.10);
+}
+
+/* ===== Session page: editable answers ===== */
+
+.field-input {
+  display: block;
+  width: 100%;
+  min-height: 5.5rem;
+  resize: vertical;
+  font-family: inherit;
+  font-size: 1rem; /* 16px+ prevents iOS focus zoom */
+  line-height: 1.5;
+  color: var(--ink);
+  background: transparent;
+  border: 1px dotted rgba(58, 46, 36, 0.5);
+  border-radius: 6px;
+  padding: 0.5rem 0.6rem;
+}
+
+.field-input:focus {
+  outline: none;
+  border-style: solid;
+  border-color: var(--ink);
+}
+
+.session-actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-top: 1.4rem;
+}
+
+.session-actions button {
+  font-family: 'IM Fell English SC', Georgia, serif;
+  font-size: 1.05rem;
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--ink-soft);
+  border-radius: 8px 3px 9px 4px / 4px 8px 3px 8px;
+  padding: 0.55rem 1.2rem;
+  cursor: pointer;
+}
+
+.session-actions button:hover {
+  background: var(--ink);
+  color: var(--parchment);
 }

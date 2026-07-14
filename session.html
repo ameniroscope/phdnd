@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=3">
+  <link rel="stylesheet" href="css/style.css?v=4">
   <meta name="theme-color" content="#221a12">
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="assets/icon-192.png">
@@ -19,24 +19,23 @@
   </header>
 
   <main class="page">
-    <h1>Current Session</h1>
-    <p class="entry-date" style="text-align: center;">Session the First — date to be inscribed</p>
+    <h1 id="session-title">Current Session</h1>
+    <p class="entry-date" id="session-status" style="text-align: center;">Consulting the archive…</p>
 
-    <h2>Where we left off</h2>
-    <p>
-      The tale has yet to begin. When the dice first strike the table, this page
-      will hold the story so far — where the party stands, what dangers loom,
-      and which thesis committee of dark forces must yet be appeased.
-    </p>
+    <div id="session-fields"></div>
 
-    <h2>Open quests</h2>
-    <ul>
-      <li>Assemble the party and light the first candle.</li>
-    </ul>
+    <div class="session-actions" id="session-actions" hidden>
+      <button id="save-btn" type="button">Inscribe</button>
+      <button id="new-session-btn" type="button" hidden>Begin next session</button>
+    </div>
 
-    <h2>Notes &amp; rumours</h2>
-    <p><em>Whispers gathered between sessions go here.</em></p>
+    <nav class="chapter-nav" id="session-nav" hidden>
+      <a href="#" id="prev-session"><span aria-hidden="true">❮</span> Previous</a>
+      <a href="#" id="next-session">Next <span aria-hidden="true">❯</span></a>
+    </nav>
   </main>
+
+  <script type="module" src="js/session.js?v=1"></script>
 
 
   <nav class="tab-bar" aria-label="App navigation">

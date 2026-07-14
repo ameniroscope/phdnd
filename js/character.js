@@ -1,39 +1,35 @@
 // Inventory & spell lists for a character page, stored in Firestore.
+//
+// Data model: one collection per box, one document per character, one field
+// per item — the field value is a server timestamp used for ordering:
+//   Inventory/{character} -> { "Smoking grimoire": <ts>, ... }
+//   Spells/{character}    -> { "Soothing Spores": <ts>, ... }
+//
 // The page must set data-character="pip" (etc.) on <main>, and contain for
 // each box: <ul data-box="inventory"> plus a <form data-box="inventory">.
-//
-// Data shape: one document per character —
-//   characters/{character} -> { inventory: [...], spells: [...] }
 
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js';
+import { db } from './firebase.js';
 import {
-  getFirestore, doc, onSnapshot, setDoc
+  doc, onSnapshot, setDoc, deleteField, serverTimestamp
 } from 'https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js';
 
-const firebaseConfig = {
-  apiKey: "AIzaSyBgk13iR_I0ID48WgoX9MBLg2PoTlrgg0s",
-  authDomain: "phdnd-podcast.firebaseapp.com",
-  projectId: "phdnd-podcast",
-  storageBucket: "phdnd-podcast.firebasestorage.app",
-  messagingSenderId: "80092982584",
-  appId: "1:80092982584:web:f112fc160bde43abaee5cd"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+const COLLECTIONS = { inventory: 'Inventory', spells: 'Spells' };
 
 const character = document.querySelector('main[data-character]').dataset.character;
-const charDoc = doc(db, 'characters', character);
 
 const items = { inventory: [], spells: [] };
-let loaded = false;
+const loaded = { inventory: false, spells: false };
+
+function boxDoc(box) {
+  return doc(db, COLLECTIONS[box], character);
+}
 
 // ---- UI ------------------------------------------------------------------
 
 function render(box) {
   const list = document.querySelector(`ul[data-box="${box}"]`);
 
-  list.replaceChildren(...items[box].map((text, i) => {
+  list.replaceChildren(...items[box].map((text) => {
     const li = document.createElement('li');
 
     const span = document.createElement('span');
@@ -44,9 +40,8 @@ function render(box) {
     remove.textContent = '✕';
     remove.title = 'Remove';
     remove.addEventListener('click', () => {
-      items[box].splice(i, 1);
-      save(box);
-      render(box);
+      setDoc(boxDoc(box), { [text]: deleteField() }, { merge: true })
+        .catch(showSaveError);
     });
 
     li.append(span, remove);
@@ -56,7 +51,7 @@ function render(box) {
   if (items[box].length === 0) {
     const li = document.createElement('li');
     li.className = 'empty';
-    li.textContent = loaded ? 'Nothing here yet…' : 'Consulting the archive…';
+    li.textContent = loaded[box] ? 'Nothing here yet…' : 'Consulting the archive…';
     list.appendChild(li);
   }
 }
@@ -71,12 +66,9 @@ function showError(message) {
   }
 }
 
-function save(box) {
-  setDoc(charDoc, { [box]: items[box] }, { merge: true })
-    .catch((err) => {
-      console.error('Failed to save:', err);
-      showError('The archive refused the entry — check the connection.');
-    });
+function showSaveError(err) {
+  console.error('Failed to save:', err);
+  showError('The archive refused the entry — check the connection.');
 }
 
 for (const form of document.querySelectorAll('form[data-box]')) {
@@ -86,27 +78,30 @@ for (const form of document.querySelectorAll('form[data-box]')) {
     const input = form.querySelector('input');
     const text = input.value.trim();
     if (!text) return;
-    items[box].push(text);
-    save(box);
+    setDoc(boxDoc(box), { [text]: serverTimestamp() }, { merge: true })
+      .catch(showSaveError);
     input.value = '';
-    render(box);
   });
   render(box);
 }
 
-// Live sync: re-render whenever the document changes (including changes
-// made by the other player on their own device).
-onSnapshot(charDoc, (snap) => {
-  // An empty from-cache snapshot means the server hasn't answered yet
-  // (e.g. offline, or the Firestore database doesn't exist) — keep the
-  // loading message rather than claiming the lists are empty.
-  loaded = !(snap.metadata.fromCache && !snap.exists());
-  const data = snap.data() || {};
-  items.inventory = data.inventory || [];
-  items.spells = data.spells || [];
-  render('inventory');
-  render('spells');
-}, (err) => {
-  console.error('Failed to load:', err);
-  showError('The archive is unreachable — check the Firestore setup.');
-});
+// Live sync: re-render whenever a document changes (including changes made
+// by the other player on their own device). Items keep insertion order via
+// their timestamp value; just-added items (timestamp still pending) go last.
+for (const box of ['inventory', 'spells']) {
+  onSnapshot(boxDoc(box), (snap) => {
+    loaded[box] = !(snap.metadata.fromCache && !snap.exists());
+    const data = snap.data() || {};
+    items[box] = Object.entries(data)
+      .sort((a, b) => {
+        const ta = a[1] && a[1].seconds !== undefined ? a[1].seconds : Infinity;
+        const tb = b[1] && b[1].seconds !== undefined ? b[1].seconds : Infinity;
+        return ta - tb;
+      })
+      .map(([name]) => name);
+    render(box);
+  }, (err) => {
+    console.error('Failed to load:', err);
+    showError('The archive is unreachable — check the Firestore setup.');
+  });
+}
