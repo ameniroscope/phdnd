@@ -345,16 +345,19 @@ ul { list-style-type: "⟡  "; }
 .session-parts {
   grid-template-columns: repeat(2, 1fr);
   gap: 0.7rem;
-  max-width: 12rem;
+  max-width: 13rem;
   margin: 0 auto;
 }
 
 .session-parts .card-art { aspect-ratio: 1; }
 
 .session-parts .card-art.no-image {
-  font-size: 1.5rem;
+  font-size: 0.85rem;
   font-family: 'IM Fell English SC', Georgia, serif;
   color: var(--ink-soft);
+  text-align: center;
+  line-height: 1.2;
+  padding: 0.3rem;
 }
 
 .part img {
