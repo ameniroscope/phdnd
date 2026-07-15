@@ -344,25 +344,24 @@ ul { list-style-type: "⟡  "; }
 
 .session-parts {
   grid-template-columns: repeat(2, 1fr);
-  gap: 0.7rem;
-  max-width: 13rem;
-  margin: 0 auto;
+  gap: 0.6rem;
+  margin: 5 auto;
 }
 
-.session-parts .card-art { aspect-ratio: 1; }
+.session-parts .card-art { aspect-ratio: 5 / 2; }
 
 .session-parts .card-art.no-image {
-  font-size: 0.85rem;
+  font-size: 1.2rem;
   font-family: 'IM Fell English SC', Georgia, serif;
   color: var(--ink-soft);
   text-align: center;
-  line-height: 1.2;
+  white-space: nowrap;
   padding: 0.3rem;
 }
 
 .part img {
   display: block;
-  max-width: 70%;
+  max-width: 55%;
   height: auto;
   margin: 0.4rem auto 1rem;
 }
