@@ -62,6 +62,24 @@ document.querySelectorAll('.session-parts .chapter-card').forEach((card) => {
 });
 
 parts.forEach((p, i) => {
+  // previous / next line first
+  const nav = document.createElement('nav');
+  nav.className = 'chapter-nav';
+
+  const prev = document.createElement('a');
+  prev.innerHTML = '<span aria-hidden="true">❮</span> Previous';
+  prev.href = `#part-${i}`;
+  prev.style.visibility = i > 0 ? 'visible' : 'hidden';
+
+  const next = document.createElement('a');
+  next.innerHTML = 'Next <span aria-hidden="true">❯</span>';
+  next.href = `#part-${i + 2}`;
+  next.style.visibility = i < parts.length - 1 ? 'visible' : 'hidden';
+
+  nav.append(prev, next);
+  p.appendChild(nav);
+
+  // mark-as-read + "read by" beneath the line
   const readRow = document.createElement('p');
   readRow.className = 'read-row';
 
@@ -81,34 +99,13 @@ parts.forEach((p, i) => {
     }
   });
 
-  const home = document.createElement('a');
-  home.className = 'session-link';
-  home.textContent = 'The session';
-  home.href = '#session';
-
-  readRow.append(readBtn, home);
+  readRow.append(readBtn);
   p.appendChild(readRow);
 
   const readInfo = document.createElement('span');
   readInfo.className = 'read-info';
   readInfoEls.push(readInfo);
   p.appendChild(readInfo);
-
-  const nav = document.createElement('nav');
-  nav.className = 'chapter-nav';
-
-  const prev = document.createElement('a');
-  prev.innerHTML = '<span aria-hidden="true">❮</span> Previous';
-  prev.href = `#part-${i}`;
-  prev.style.visibility = i > 0 ? 'visible' : 'hidden';
-
-  const next = document.createElement('a');
-  next.innerHTML = 'Next <span aria-hidden="true">❯</span>';
-  next.href = `#part-${i + 2}`;
-  next.style.visibility = i < parts.length - 1 ? 'visible' : 'hidden';
-
-  nav.append(prev, next);
-  p.appendChild(nav);
 });
 
 // ---- podcast players -------------------------------------------------------

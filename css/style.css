@@ -342,7 +342,7 @@ ul { list-style-type: "⟡  "; }
 
 /* ===== Session page: parts, podcasts, tiles, map, answers ===== */
 
-.session-parts { grid-template-columns: repeat(3, 1fr); gap: 0.9rem 0.7rem; }
+.session-parts { grid-template-columns: repeat(2, 1fr); gap: 0.9rem 0.7rem; }
 
 .session-parts .card-art.no-image {
   font-size: 2rem;
@@ -350,12 +350,11 @@ ul { list-style-type: "⟡  "; }
   color: var(--ink-soft);
 }
 
-.back-link {
-  display: inline-block;
-  font-family: 'IM Fell English SC', Georgia, serif;
-  font-size: 1rem;
-  text-decoration: none;
-  margin-bottom: 0.4rem;
+.part img {
+  display: block;
+  max-width: 70%;
+  height: auto;
+  margin: 0.4rem auto 1rem;
 }
 
 .ink-btn {
@@ -501,12 +500,6 @@ ul { list-style-type: "⟡  "; }
   justify-content: center;
   gap: 0.9rem;
   margin: 1.4rem 0 0;
-}
-
-.session-link {
-  font-family: 'IM Fell English SC', Georgia, serif;
-  font-size: 1.05rem;
-  text-decoration: none;
 }
 
 .read-info {
