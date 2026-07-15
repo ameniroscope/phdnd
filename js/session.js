@@ -81,12 +81,18 @@ parts.forEach((p, i) => {
     }
   });
 
+  const home = document.createElement('a');
+  home.className = 'session-link';
+  home.textContent = 'The session';
+  home.href = '#session';
+
+  readRow.append(readBtn, home);
+  p.appendChild(readRow);
+
   const readInfo = document.createElement('span');
   readInfo.className = 'read-info';
   readInfoEls.push(readInfo);
-
-  readRow.append(readBtn, readInfo);
-  p.appendChild(readRow);
+  p.appendChild(readInfo);
 
   const nav = document.createElement('nav');
   nav.className = 'chapter-nav';
@@ -96,16 +102,12 @@ parts.forEach((p, i) => {
   prev.href = `#part-${i}`;
   prev.style.visibility = i > 0 ? 'visible' : 'hidden';
 
-  const home = document.createElement('a');
-  home.textContent = 'The session';
-  home.href = '#session';
-
   const next = document.createElement('a');
   next.innerHTML = 'Next <span aria-hidden="true">❯</span>';
   next.href = `#part-${i + 2}`;
   next.style.visibility = i < parts.length - 1 ? 'visible' : 'hidden';
 
-  nav.append(prev, home, next);
+  nav.append(prev, next);
   p.appendChild(nav);
 });
 
