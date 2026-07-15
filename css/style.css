@@ -403,6 +403,25 @@ ul { list-style-type: "⟡  "; }
   white-space: nowrap;
 }
 
+/* the Listen button reads inverted: full brown with parchment text */
+.play-btn {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--parchment);
+}
+
+.play-btn:hover {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--parchment);
+}
+
+.play-btn:disabled {
+  background: transparent;
+  border-color: var(--ink-soft);
+  color: var(--ink-soft);
+}
+
 .tile-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
