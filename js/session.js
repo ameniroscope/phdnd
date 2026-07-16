@@ -15,12 +15,12 @@ const SESSION_ID = '1';
 // The six discovery tiles. Fill these in as objects get revealed:
 // put images in assets/objects/ (a missing image shows an ornament instead).
 const OBJECTS = [
-  { name: 'A first curiosity', image: 'assets/objects/1.png', text: 'To be revealed…' },
-  { name: 'A second curiosity', image: 'assets/objects/2.png', text: 'To be revealed…' },
-  { name: 'A third curiosity', image: 'assets/objects/3.png', text: 'To be revealed…' },
-  { name: 'A fourth curiosity', image: 'assets/objects/4.png', text: 'To be revealed…' },
-  { name: 'A fifth curiosity', image: 'assets/objects/5.png', text: 'To be revealed…' },
-  { name: 'A sixth curiosity', image: 'assets/objects/6.png', text: 'To be revealed…' }
+  { image: 'assets/objects/1.png' },
+  { image: 'assets/objects/2.png'},
+  { image: 'assets/objects/3.png'},
+  { image: 'assets/objects/4.png'},
+  { image: 'assets/objects/5.png'},
+  { image: 'assets/objects/6.png'}
 ];
 
 const MAP_IMAGE = 'assets/map.jpg';
