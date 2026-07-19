@@ -216,21 +216,9 @@ OBJECTS.forEach((obj, i) => {
   badge.className = 'tile-badge';
   tile.appendChild(badge);
 
-  // clicking a tile just previews the card — it does not claim it
+  // clicking a tile previews the card in the popup (claim button lives there)
   tile.addEventListener('click', () => {
-    const art = document.getElementById('object-art');
-    art.replaceChildren();
-    const img = document.createElement('img');
-    img.alt = '';
-    img.src = obj.image;
-    img.addEventListener('error', () => {
-      const glyph = document.createElement('span');
-      glyph.className = 'glyph';
-      glyph.textContent = '❦';
-      img.replaceWith(glyph);
-    });
-    art.appendChild(img);
-    openScrim('object-scrim');
+    openObject(i);
   });
 
   tile.badgeEl = badge;
@@ -238,16 +226,25 @@ OBJECTS.forEach((obj, i) => {
   tileGrid.appendChild(tile);
 });
 
-// build the number picker (I…VI)
-const numberButtons = document.getElementById('number-buttons');
-OBJECTS.forEach((_, i) => {
-  const b = document.createElement('button');
-  b.type = 'button';
-  b.className = 'ink-btn';
-  b.dataset.num = String(i + 1);
-  b.textContent = roman(i + 1);
-  numberButtons.appendChild(b);
-});
+// the object currently shown in the popup, so its claim button knows which
+let currentObject = null;
+
+function openObject(i) {
+  currentObject = i;
+  const art = document.getElementById('object-art');
+  art.replaceChildren();
+  const img = document.createElement('img');
+  img.alt = '';
+  img.src = OBJECTS[i].image;
+  img.addEventListener('error', () => {
+    const glyph = document.createElement('span');
+    glyph.className = 'glyph';
+    glyph.textContent = '❦';
+    img.replaceWith(glyph);
+  });
+  art.appendChild(img);
+  openScrim('object-scrim');
+}
 
 // ---- part 3: the map -------------------------------------------------------
 
@@ -305,35 +302,16 @@ document.getElementById('who-scrim').addEventListener('click', (e) => {
   if (e.target.id === 'who-scrim' && whoResolve) { whoResolve(null); whoResolve = null; }
 });
 
-// ask "which object number?" and resolve with 1..6, or null if dismissed
-let numResolve = null;
-
-function chooseNumber() {
-  return new Promise((resolve) => {
-    numResolve = resolve;
-    openScrim('number-scrim');
-  });
-}
-
-for (const btn of document.querySelectorAll('#number-buttons [data-num]')) {
-  btn.addEventListener('click', () => {
-    closeScrim('number-scrim');
-    if (numResolve) { numResolve(Number(btn.dataset.num)); numResolve = null; }
-  });
-}
-
-document.getElementById('number-scrim').addEventListener('click', (e) => {
-  if (e.target.id === 'number-scrim' && numResolve) { numResolve(null); numResolve = null; }
-});
-
-// "Mark an object taken": who? then which number? then save it, shared
-document.getElementById('claim-object-btn').addEventListener('click', async () => {
+// "Mark as taken" inside the object popup: the object is known, so just
+// ask who, then save it (shared, live).
+document.getElementById('claim-in-popup').addEventListener('click', async () => {
+  if (currentObject === null) return;
+  const n = currentObject + 1;
   const c = await chooseCharacter();
   if (!c) return;
-  const n = await chooseNumber();
-  if (!n) return;
   try {
     await setDoc(doc(db, 'Session', SESSION_ID), { [`object${n}_${c}`]: true }, { merge: true });
+    closeScrim('object-scrim');
     status('Inscribed. ✦');
     setTimeout(() => { if (statusEl.textContent === 'Inscribed. ✦') status(''); }, 2500);
   } catch (err) {

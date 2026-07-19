@@ -473,17 +473,6 @@ ul { list-style-type: "⟡  "; }
   line-height: 1;
 }
 
-.claim-row { text-align: center; margin: 1rem 0 0; }
-
-.number-buttons {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.6rem;
-  margin-top: 1.2rem;
-}
-
-.number-buttons .ink-btn { padding: 0.55rem 0; }
-
 .map-row { text-align: center; margin: 1rem 0; }
 
 /* --- overlays --- */
@@ -536,46 +525,59 @@ ul { list-style-type: "⟡  "; }
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
 }
 
-/* object popup: a parchment card with the close button above the image */
-.object-card {
+/* image popups (object card, map): just the image on the scrim, no frame */
+.image-popup {
+  position: relative;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  gap: 0.7rem;
   max-width: min(92vw, 460px);
-  max-height: 88vh;
-  background: var(--parchment);
-  border: 2px solid var(--ink-soft);
-  border-radius: 8px;
-  padding: 0.5rem;
+  max-height: 90vh;
 }
 
-.close-top {
-  position: static;
+/* cream round close button, just above the image on the right */
+.close-round {
   align-self: flex-end;
-  width: auto;
-  height: auto;
-  gap: 0.3rem;
-  padding: 0.3rem 0.7rem;
-  margin-bottom: 0.4rem;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  background: var(--ink-soft);
-  color: var(--parchment);
-  border-color: var(--ink-soft);
-  box-shadow: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  background: var(--parchment);
+  color: var(--ink);
+  border: 2px solid var(--ink-soft);
+  font-size: 1.2rem;
+  font-weight: 700; /* thick X */
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
 }
 
-.object-art {
-  overflow: auto;
-}
-
-.object-art img {
+.object-art img,
+#map-holder img {
   display: block;
   max-width: 100%;
-  max-height: 74vh;
+  max-height: 80vh;
   border-radius: 6px;
 }
 
-.object-art .glyph { font-size: 3rem; color: var(--accent); }
+.object-art .glyph { font-size: 3rem; color: var(--candlelight); }
+
+/* claim button on the object popup — visible on the dark scrim */
+.claim-btn {
+  font-family: 'IM Fell English SC', Georgia, serif;
+  font-size: 1.05rem;
+  color: var(--parchment);
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  padding: 0.55rem 1.4rem;
+  cursor: pointer;
+}
+
+.claim-btn:hover { background: var(--ink); border-color: var(--ink); }
 
 #map-holder img { max-width: 100%; }
 
@@ -624,6 +626,13 @@ ul { list-style-type: "⟡  "; }
 }
 
 #whereto-answers p { margin: 0.4rem 0; }
+
+.whereto-note {
+  font-style: italic;
+  color: var(--ink-soft);
+  text-align: center;
+  margin: 0.6rem 0;
+}
 
 /* ===== Session page: editable answers ===== */
 
