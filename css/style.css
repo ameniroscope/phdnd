@@ -440,6 +440,7 @@ ul { list-style-type: "⟡  "; }
 }
 
 .tile {
+  position: relative;
   aspect-ratio: 1;
   display: flex;
   align-items: center;
@@ -456,6 +457,21 @@ ul { list-style-type: "⟡  "; }
 .tile:hover {
   background: var(--ink);
   color: var(--parchment);
+}
+
+/* an opened card is marked as discovered (shared between players) */
+.tile.seen {
+  border-color: var(--accent);
+  background: rgba(110, 74, 31, 0.12);
+}
+
+.tile.seen::after {
+  content: '✓';
+  position: absolute;
+  top: 2px;
+  right: 5px;
+  font-size: 0.75rem;
+  color: var(--accent);
 }
 
 .map-row { text-align: center; margin: 1rem 0; }

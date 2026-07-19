@@ -203,6 +203,7 @@ document.addEventListener('keydown', (e) => {
 // ---- part 2: object tiles --------------------------------------------------
 
 const tileGrid = document.getElementById('tile-grid');
+const tileEls = [];
 
 OBJECTS.forEach((obj, i) => {
   const tile = document.createElement('button');
@@ -223,7 +224,12 @@ OBJECTS.forEach((obj, i) => {
     });
     art.appendChild(img);
     openScrim('object-scrim');
+
+    // remember that this card has been opened (shared with both players)
+    setDoc(doc(db, 'Session', SESSION_ID), { [`object${i + 1}_seen`]: true }, { merge: true })
+      .catch((err) => console.error('Failed to save opened card:', err));
   });
+  tileEls.push(tile);
   tileGrid.appendChild(tile);
 });
 
@@ -326,9 +332,16 @@ function renderRead(data) {
   });
 }
 
+function renderTiles(data) {
+  tileEls.forEach((tile, i) => {
+    tile.classList.toggle('seen', !!data[`object${i + 1}_seen`]);
+  });
+}
+
 onSnapshot(doc(db, 'Session', SESSION_ID), (snap) => {
   const data = snap.data() || {};
   renderRead(data);
+  renderTiles(data);
   answersEl.replaceChildren(...['luna', 'pip']
     .filter((c) => data[`whereto_${c}`])
     .map((c) => {
