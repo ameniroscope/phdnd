@@ -12,18 +12,18 @@ import {
 
 const SESSION_ID = '1';
 
-// The six discovery tiles. Fill these in as objects get revealed:
-// put images in assets/objects/ (a missing image shows an ornament instead).
+// The six discovery tiles — each image is a self-contained item card.
+// Put images in images/objects/ (a missing image shows an ornament instead).
 const OBJECTS = [
-  { image: 'assets/objects/1.png' },
-  { image: 'assets/objects/2.png'},
-  { image: 'assets/objects/3.png'},
-  { image: 'assets/objects/4.png'},
-  { image: 'assets/objects/5.png'},
-  { image: 'assets/objects/6.png'}
+  { image: 'images/objects/1.png' },
+  { image: 'images/objects/2.png' },
+  { image: 'images/objects/3.png' },
+  { image: 'images/objects/4.png' },
+  { image: 'images/objects/5.png' },
+  { image: 'images/objects/6.png' }
 ];
 
-const MAP_IMAGE = 'assets/map.jpg';
+const MAP_IMAGE = 'images/fullmap.png';
 
 function roman(n) {
   const table = [[10, 'X'], [9, 'IX'], [5, 'V'], [4, 'IV'], [1, 'I']];
@@ -222,8 +222,6 @@ OBJECTS.forEach((obj, i) => {
       img.replaceWith(glyph);
     });
     art.appendChild(img);
-    document.getElementById('object-title').textContent = obj.name;
-    document.getElementById('object-text').textContent = obj.text;
     openScrim('object-scrim');
   });
   tileGrid.appendChild(tile);

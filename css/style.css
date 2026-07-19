@@ -494,17 +494,34 @@ ul { list-style-type: "⟡  "; }
 .close-btn {
   position: absolute;
   top: 0.4rem;
-  right: 0.6rem;
-  background: none;
-  border: none;
+  right: 0.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  background: var(--parchment);
+  border: 1px solid var(--ink-soft);
+  border-radius: 50%;
   cursor: pointer;
-  font-size: 1.1rem;
+  font-size: 1rem;
+  line-height: 1;
   color: var(--ink-soft);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+/* the object popup is just the card image floating on the scrim */
+.object-popup {
+  position: relative;
+  max-width: min(92vw, 460px);
+  max-height: 88vh;
 }
 
 .object-art img {
-  max-width: 70%;
-  mix-blend-mode: multiply;
+  display: block;
+  max-width: 100%;
+  max-height: 88vh;
+  border-radius: 8px;
 }
 
 .object-art .glyph { font-size: 3rem; color: var(--accent); }

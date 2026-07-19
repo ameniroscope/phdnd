@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=15">
+  <link rel="stylesheet" href="css/style.css?v=16">
   <meta name="theme-color" content="#221a12">
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="assets/icon-192.png">
@@ -75,13 +75,11 @@
     </section>
   </main>
 
-  <!-- object card overlay -->
+  <!-- object card overlay (the image is a self-contained card) -->
   <div class="scrim" id="object-scrim" hidden>
-    <div class="overlay-card" role="dialog" aria-modal="true">
+    <div class="object-popup" role="dialog" aria-modal="true">
       <button class="close-btn" type="button" aria-label="Close">✕</button>
       <div class="object-art" id="object-art"></div>
-      <h2 id="object-title"></h2>
-      <p id="object-text"></p>
     </div>
   </div>
 
@@ -104,7 +102,7 @@
     </div>
   </div>
 
-  <script type="module" src="js/session.js?v=8"></script>
+  <script type="module" src="js/session.js?v=9"></script>
 
 
   <nav class="tab-bar" aria-label="App navigation">
