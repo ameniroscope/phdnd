@@ -210,6 +210,13 @@ OBJECTS.forEach((obj, i) => {
   tile.type = 'button';
   tile.className = 'tile';
   tile.textContent = roman(i + 1);
+
+  // owner badge (who has taken this object) sits in the corner
+  const badge = document.createElement('span');
+  badge.className = 'tile-badge';
+  tile.appendChild(badge);
+
+  // clicking a tile just previews the card — it does not claim it
   tile.addEventListener('click', () => {
     const art = document.getElementById('object-art');
     art.replaceChildren();
@@ -224,13 +231,22 @@ OBJECTS.forEach((obj, i) => {
     });
     art.appendChild(img);
     openScrim('object-scrim');
-
-    // remember that this card has been opened (shared with both players)
-    setDoc(doc(db, 'Session', SESSION_ID), { [`object${i + 1}_seen`]: true }, { merge: true })
-      .catch((err) => console.error('Failed to save opened card:', err));
   });
+
+  tile.badgeEl = badge;
   tileEls.push(tile);
   tileGrid.appendChild(tile);
+});
+
+// build the number picker (I…VI)
+const numberButtons = document.getElementById('number-buttons');
+OBJECTS.forEach((_, i) => {
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.className = 'ink-btn';
+  b.dataset.num = String(i + 1);
+  b.textContent = roman(i + 1);
+  numberButtons.appendChild(b);
 });
 
 // ---- part 3: the map -------------------------------------------------------
@@ -289,6 +305,43 @@ document.getElementById('who-scrim').addEventListener('click', (e) => {
   if (e.target.id === 'who-scrim' && whoResolve) { whoResolve(null); whoResolve = null; }
 });
 
+// ask "which object number?" and resolve with 1..6, or null if dismissed
+let numResolve = null;
+
+function chooseNumber() {
+  return new Promise((resolve) => {
+    numResolve = resolve;
+    openScrim('number-scrim');
+  });
+}
+
+for (const btn of document.querySelectorAll('#number-buttons [data-num]')) {
+  btn.addEventListener('click', () => {
+    closeScrim('number-scrim');
+    if (numResolve) { numResolve(Number(btn.dataset.num)); numResolve = null; }
+  });
+}
+
+document.getElementById('number-scrim').addEventListener('click', (e) => {
+  if (e.target.id === 'number-scrim' && numResolve) { numResolve(null); numResolve = null; }
+});
+
+// "Mark an object taken": who? then which number? then save it, shared
+document.getElementById('claim-object-btn').addEventListener('click', async () => {
+  const c = await chooseCharacter();
+  if (!c) return;
+  const n = await chooseNumber();
+  if (!n) return;
+  try {
+    await setDoc(doc(db, 'Session', SESSION_ID), { [`object${n}_${c}`]: true }, { merge: true });
+    status('Inscribed. ✦');
+    setTimeout(() => { if (statusEl.textContent === 'Inscribed. ✦') status(''); }, 2500);
+  } catch (err) {
+    console.error('Failed to save object claim:', err);
+    status('The archive refused the entry — check the connection.');
+  }
+});
+
 inputEl.addEventListener('click', async () => {
   if (who) return;
   const c = await chooseCharacter();
@@ -334,7 +387,9 @@ function renderRead(data) {
 
 function renderTiles(data) {
   tileEls.forEach((tile, i) => {
-    tile.classList.toggle('seen', !!data[`object${i + 1}_seen`]);
+    const owners = ['luna', 'pip'].filter((c) => data[`object${i + 1}_${c}`]);
+    tile.badgeEl.textContent = owners.map((c) => CHAR_EMOJI[c]).join('');
+    tile.classList.toggle('taken', owners.length > 0);
   });
 }
 

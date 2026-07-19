@@ -459,20 +459,30 @@ ul { list-style-type: "⟡  "; }
   color: var(--parchment);
 }
 
-/* an opened card is marked as discovered (shared between players) */
-.tile.seen {
+/* a taken object shows who has it (shared between players) */
+.tile.taken {
   border-color: var(--accent);
   background: rgba(110, 74, 31, 0.12);
 }
 
-.tile.seen::after {
-  content: '✓';
+.tile-badge {
   position: absolute;
-  top: 2px;
-  right: 5px;
+  top: 1px;
+  right: 3px;
   font-size: 0.75rem;
-  color: var(--accent);
+  line-height: 1;
 }
+
+.claim-row { text-align: center; margin: 1rem 0 0; }
+
+.number-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+  margin-top: 1.2rem;
+}
+
+.number-buttons .ink-btn { padding: 0.55rem 0; }
 
 .map-row { text-align: center; margin: 1rem 0; }
 
@@ -526,18 +536,43 @@ ul { list-style-type: "⟡  "; }
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
 }
 
-/* the object popup is just the card image floating on the scrim */
-.object-popup {
-  position: relative;
+/* object popup: a parchment card with the close button above the image */
+.object-card {
+  display: flex;
+  flex-direction: column;
   max-width: min(92vw, 460px);
   max-height: 88vh;
+  background: var(--parchment);
+  border: 2px solid var(--ink-soft);
+  border-radius: 8px;
+  padding: 0.5rem;
+}
+
+.close-top {
+  position: static;
+  align-self: flex-end;
+  width: auto;
+  height: auto;
+  gap: 0.3rem;
+  padding: 0.3rem 0.7rem;
+  margin-bottom: 0.4rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  background: var(--ink-soft);
+  color: var(--parchment);
+  border-color: var(--ink-soft);
+  box-shadow: none;
+}
+
+.object-art {
+  overflow: auto;
 }
 
 .object-art img {
   display: block;
   max-width: 100%;
-  max-height: 88vh;
-  border-radius: 8px;
+  max-height: 74vh;
+  border-radius: 6px;
 }
 
 .object-art .glyph { font-size: 3rem; color: var(--accent); }
