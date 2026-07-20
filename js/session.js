@@ -23,7 +23,7 @@ const OBJECTS = [
   { image: 'images/objects/6.png' }
 ];
 
-const MAP_IMAGE = 'images/fullmap.png';
+const MAP_IMAGE = 'images/fullmap_annotated.png';
 
 function roman(n) {
   const table = [[10, 'X'], [9, 'IX'], [5, 'V'], [4, 'IV'], [1, 'I']];
