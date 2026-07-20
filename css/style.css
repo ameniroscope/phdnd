@@ -536,25 +536,6 @@ ul { list-style-type: "⟡  "; }
   max-height: 90vh;
 }
 
-/* cream round close button, just above the image on the right */
-.close-round {
-  align-self: flex-end;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.2rem;
-  height: 2.2rem;
-  border-radius: 50%;
-  background: var(--parchment);
-  color: var(--ink);
-  border: 2px solid var(--ink-soft);
-  font-size: 1.2rem;
-  font-weight: 700; /* thick X */
-  line-height: 1;
-  cursor: pointer;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
-}
-
 .object-art img,
 #map-holder img {
   display: block;
