@@ -660,3 +660,138 @@ ul { list-style-type: "⟡  "; }
   background: var(--ink);
   color: var(--parchment);
 }
+
+/* ===== Episode finale: dice, secrets, battle, Deep Ledger, riddle ===== */
+
+.field-input[hidden] { display: none; }
+
+.dice-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin: 1rem 0;
+}
+
+.dice-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.dice-name { font-family: 'IM Fell English SC', Georgia, serif; }
+
+.die {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  font-family: 'IM Fell English SC', Georgia, serif;
+  font-size: 1.3rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-soft);
+  border: 2px solid rgba(58, 46, 36, 0.55);
+  border-radius: 8px;
+}
+
+/* the d20 is drawn as a gem rather than a cube */
+.die.d20 { clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%); background: rgba(58, 46, 36, 0.12); border: none; }
+
+.die.rolling { animation: die-tumble 0.12s linear infinite; }
+
+.die.rolled { color: var(--ink); border-color: var(--accent); background: rgba(110, 74, 31, 0.14); }
+
+@keyframes die-tumble {
+  from { transform: rotate(-12deg); }
+  to { transform: rotate(12deg); }
+}
+
+.dice-total {
+  text-align: center;
+  font-family: 'IM Fell English SC', Georgia, serif;
+  font-size: 1.2rem;
+}
+
+.battle-outcome {
+  text-align: center;
+  font-style: italic;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  padding: 0.7rem 0.9rem;
+  background: rgba(110, 74, 31, 0.1);
+}
+
+main.page ul.secret-list { list-style: none; margin: 0.8rem 0; }
+
+.secret-list li { padding: 0.25rem 0; border-bottom: 1px dotted rgba(58, 46, 36, 0.5); }
+
+.secret-choice {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.4rem 1.2rem;
+  margin: 0.4rem 0 0.8rem;
+}
+
+.secret-choice input { accent-color: var(--ink-soft); }
+
+/* Deep Ledger — category colours follow the point-system app */
+.ledger { --encounters: #5e3a78; --journey: #3f6b35; --journal: #b08a1e; }
+
+.ledger-rank {
+  text-align: center;
+  font-family: 'IM Fell English SC', Georgia, serif;
+  font-size: 1.2rem;
+}
+
+.ledger-bar {
+  position: relative;
+  display: flex;
+  height: 1.6rem;
+  border: 2px solid rgba(58, 46, 36, 0.85);
+  border-radius: 8px;
+  background: rgba(58, 46, 36, 0.08);
+  overflow: hidden;
+}
+
+.ledger-seg { width: 0; transition: width 1.6s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.ledger-seg.encounters { background: var(--encounters); }
+.ledger-seg.journey { background: var(--journey); }
+.ledger-seg.journal { background: var(--journal); }
+
+.ledger-lock {
+  position: absolute;
+  right: 0.3rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.9rem;
+}
+
+.ledger-count {
+  text-align: center;
+  font-style: italic;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+main.page ul.ledger-legend { list-style: none; margin: 0.8rem 0; }
+
+.ledger-legend li { display: flex; align-items: center; gap: 0.5rem; }
+
+.ledger-dot { width: 0.8rem; height: 0.8rem; border-radius: 50%; flex: none; }
+.ledger-dot.encounters { background: var(--encounters); }
+.ledger-dot.journey { background: var(--journey); }
+.ledger-dot.journal { background: var(--journal); }
+
+.riddle {
+  font-style: italic;
+  text-align: center;
+  font-size: 1.15rem;
+  margin: 1rem 0.4rem;
+  padding: 0.6rem 0;
+  border-top: 1px solid var(--ink-soft);
+  border-bottom: 1px solid var(--ink-soft);
+}
+
+#riddle-answers p { margin: 0.4rem 0; }

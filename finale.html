@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Episode II Finale — PhDnD</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=21">
+  <meta name="theme-color" content="#221a12">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
+</head>
+<body>
+
+  <header class="site-header">
+    <h1 class="site-title"><a href="session.html">PhDnD</a></h1>
+  </header>
+
+  <main class="page">
+    <h1>Episode II</h1>
+    <p class="entry-date" id="session-status" style="text-align: center;" hidden></p>
+
+    <!-- the closing sequence, in order -->
+    <section id="parts-menu">
+      <div class="gallery session-parts">
+        <a class="chapter-card" href="#part-1">
+          <span class="card-art no-image">1. Fishing</span>
+        </a>
+        <a class="chapter-card" href="#part-2">
+          <span class="card-art no-image">2. Secrets</span>
+        </a>
+        <a class="chapter-card" href="#part-3">
+          <span class="card-art no-image">3. The Battle</span>
+        </a>
+        <a class="chapter-card" href="#part-4">
+          <span class="card-art no-image">4. Deep Ledger</span>
+        </a>
+        <a class="chapter-card" href="#part-5">
+          <span class="card-art no-image">5. The Riddle</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="part" id="part-1" hidden>
+      <h2>Fishing</h2>
+      <p class="whereto-note">Each of you casts a line — one d6 apiece.</p>
+      <div class="dice-rows" id="fish-dice"></div>
+      <p class="dice-total" id="fish-total"></p>
+    </section>
+
+    <section class="part" id="part-2" hidden>
+      <h2>Secrets</h2>
+      <p class="whereto-note">By the fire, each of you may choose to share a secret — or keep it.
+        What you write is sealed: only the Archivist will read it.</p>
+      <ul class="secret-list" id="secret-list"></ul>
+      <p class="map-row"><button class="ink-btn" id="secret-open" type="button">✉ Seal my choice</button></p>
+
+      <form id="secret-form" hidden>
+        <p class="whereto-speaker" id="secret-speaker"></p>
+        <div class="secret-choice">
+          <label><input type="radio" name="secret-share" value="shared" checked> I share a secret</label>
+          <label><input type="radio" name="secret-share" value="kept"> I keep it to myself</label>
+        </div>
+        <textarea class="field-input" id="secret-input" placeholder="Your secret…" rows="4"></textarea>
+        <div class="session-actions">
+          <button class="ink-btn" type="button" id="secret-cancel">Cancel</button>
+          <button class="ink-btn" type="submit">Seal</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="part" id="part-3" hidden>
+      <h2>The Battle</h2>
+      <p class="whereto-note">Three monsters rise from the water. Each of you rolls a d20 —
+        together, your rolls decide how the monsters fare.</p>
+      <div class="dice-rows" id="battle-dice"></div>
+      <p class="dice-total" id="battle-total"></p>
+      <p class="battle-outcome" id="battle-outcome" hidden></p>
+    </section>
+
+    <section class="part" id="part-4" hidden>
+      <h2>The Deep Ledger</h2>
+      <p class="whereto-note">Every deed is inscribed. When the ledger is full, the way to Archivon opens.</p>
+      <div class="ledger" id="ledger"></div>
+    </section>
+
+    <section class="part" id="part-5" hidden>
+      <h2>The Riddle</h2>
+      <blockquote class="riddle" id="riddle-text"></blockquote>
+      <p class="whereto-note">Ponder it before we meet again.</p>
+      <div id="riddle-answers"></div>
+      <form id="riddle-form">
+        <p class="whereto-speaker" id="riddle-speaker" hidden></p>
+        <textarea class="field-input" id="riddle-input" placeholder="Tap to answer…" rows="3" readonly></textarea>
+        <div class="session-actions">
+          <button class="ink-btn" id="riddle-save" type="submit" hidden>Inscribe</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <!-- who-is-this overlay -->
+  <div class="scrim" id="who-scrim" hidden>
+    <div class="overlay-card" role="dialog" aria-modal="true">
+      <h2>Who are you?</h2>
+      <div class="who-buttons">
+        <button class="ink-btn" type="button" data-char="pip">🍄 Pip</button>
+        <button class="ink-btn" type="button" data-char="luna">🌙 Luna</button>
+        <button class="ink-btn" type="button" data-char="lux">🐉 Lux</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="js/finale.js?v=1"></script>
+
+  <nav class="tab-bar" aria-label="App navigation">
+    <a href="session.html" aria-current="page"><span class="tab-icon">🕯️</span>Story</a>
+    <a href="chronicles.html"><span class="tab-icon">📜</span>Chronicles</a>
+    <a href="pip.html"><span class="tab-icon">🍄</span>Pip</a>
+    <a href="luna.html"><span class="tab-icon">🌙</span>Luna</a>
+    <a href="lux.html"><span class="tab-icon">🐉</span>Lux</a>
+  </nav>
+
+  <script src="js/register-sw.js"></script>
+
+</body>
+</html>
