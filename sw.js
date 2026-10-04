@@ -10,7 +10,7 @@
    - Range requests (audio seeking) pass through untouched, so the podcast
      player still seeks and we never cache multi-megabyte partial responses. */
 
-const CACHE = 'phdnd-v1';
+const CACHE = 'phdnd-v2';
 
 // Core shell seeded at install so the first offline load works. Listed without
 // ?v= query strings; the fetch handler matches with ignoreSearch, and the
@@ -22,6 +22,7 @@ const CORE = [
   'chronicles.html',
   'luna.html',
   'pip.html',
+  'lux.html',
   'finale.html',
   'manifest.json',
   'css/style.css',
@@ -37,6 +38,7 @@ const CORE = [
   'assets/geof.png',
   'assets/luna.png',
   'assets/pip.png',
+  'assets/lux.png',
   'images/recap.png',
   'images/fullmap.png',
   'images/fullmap_annotated.png',

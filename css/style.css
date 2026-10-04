@@ -795,3 +795,6 @@ main.page ul.ledger-legend { list-style: none; margin: 0.8rem 0; }
 }
 
 #riddle-answers p { margin: 0.4rem 0; }
+
+/* a link styled as an ink button (e.g. the way to the finale) */
+a.ink-btn { display: inline-block; text-decoration: none; }
